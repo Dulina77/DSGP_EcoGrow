@@ -20,7 +20,11 @@ nohup python app.py &
 
 
 #Commands
+#rasa train
+
 #rasa run actions
-#rasa run --enable-api
+
+#rasa run --enable-api --cors "*"
+
 #cd Backend
- #flask run
+#python app.py
