@@ -5,28 +5,39 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     font-family: "Poppins", "sans-serif";
     text-align: center;
-
     background-color: #f4f4f9;
 }
+
+#container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 .video-container {
     position: relative;
     width: 50%;
     margin: auto;
 }
+
 video, canvas {
     width: 100%;
     max-width: 500px;
-    /*border: 2px solid black;*/
     display: block;
     border-radius: 10px;
     margin-bottom: 10%;
 }
+
 .controls {
     margin-top: 10px;
 }
+
 button {
     padding: 10px 15px;
     font-size: 16px;
@@ -37,33 +48,30 @@ button {
     cursor: pointer;
     font-family: "Poppins", "sans-serif";
 }
+
 #submit-btn {
     display: none;
 }
-#cam-Container{
-    width: 50%;
-    float: left;
 
+#cam-Container {
+    width: 50%;
     background: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-left: 5%;
-
 }
 
-#form{
-    width: 30%;
-    float: right;
-    margin-bottom: 20%;
+#form {
+    width: 37%;
     background: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-right: 5%;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .custom-file-upload {
@@ -77,20 +85,19 @@ button {
     display: inline-block;
 }
 
-
 .custom-file-upload:hover {
     background-color: #45a049;
 }
 
-
-h1{
+h1 {
     margin-bottom: 5%;
 }
-h4{
-    margin-bottom:5% ;
+
+h4 {
+    margin-bottom: 5%;
 }
 
-.navBar{
+.navBar {
     background-color: #45a049;
     overflow: hidden;
     height: 50%;
@@ -108,7 +115,7 @@ h4{
     margin-bottom: 1%;
 }
 
-#name{
+#name {
     float: left;
     margin-left: 2%;
     font-size: 20px;
@@ -120,7 +127,14 @@ h4{
 }
 
 #nextButton {
-    clear: both;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 20px;
+}
+
+#preview-image {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    border-radius: 10px;
+    margin: 0 auto 10%;
 }

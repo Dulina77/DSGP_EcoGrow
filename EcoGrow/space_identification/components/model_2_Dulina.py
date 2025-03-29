@@ -1,10 +1,12 @@
 
 from tensorflow.keras.models import load_model # type: ignore
 from tensorflow.keras.applications.vgg16 import preprocess_input # type: ignore
-from tensorflow.keras.utils import img_to_array, load_img # type: ignore
+from tensorflow.keras.preprocessing.image import img_to_array, load_img  # type: ignore
 import numpy as np
 
-model = load_model(r"EcoGrow\space_identification\Models\resnet50_balcony_model.h5")
+model = load_model(r"C:\Users\dulin\DSGP_2\EcoGrow\space_identification\Training\balcony_identification_model.h5")
+
+class_names = ["Balcony", "Indoor", "None"]
 
 def preprocess(image_path):
     image = load_img(image_path, target_size=(128,128))
@@ -13,23 +15,26 @@ def preprocess(image_path):
     image_array = preprocess_input(image_array)
     return image_array
 
-def predict(image_path, model, threshold = 0.2):
+def predict(image_path, model, confidence_threshold=0.7):
+
     preprocessed_image = preprocess(image_path)
-    prediction = model.predict(preprocessed_image)[0][0]
+    
 
+    prediction = model.predict(preprocessed_image, verbose=0)[0]  
+    
 
-    if prediction < (0.5 - 0.49) :
-        predicted_class =  "This is a Balcony space"
-    elif prediction > (0.5 + threshold):
-        predicted_class =  "This is Indoor space"
-    else:
+    predicted_class_idx = np.argmax(prediction)
+    predicted_class = class_names[predicted_class_idx]
+    if predicted_class == "None":
         predicted_class = "Not a Balcony or Indoor Space"
- 
+    
 
-    confidence_score = float(np.max(prediction)) 
-    print(confidence_score)
+    confidence_score = float(np.max(prediction))
+    
 
-
+    if confidence_score < confidence_threshold:
+        return "Not a Recognizable Space", confidence_score
+    
     return predicted_class, confidence_score
 
 

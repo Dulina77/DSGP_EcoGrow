@@ -13,7 +13,7 @@
     <nav class = "navBar">
         <a href="#" id="name">EcoGrow</a>
         <a href="#" id="about">About</a>
-        <a href="#" id="chatbot">ChatBot</a>
+        <a href="{{ url_for('chatbot.chat') }}" id="chatbot">ChatBot</a>
         <a href="{{ url_for('disease_identification.home') }}" id="disease">Disease Identification</a>
         <a href="#" id="plant_predict">Predict</a>
     </nav>
@@ -43,7 +43,8 @@
                 <input type="file" name="file" id="file">
                 <button type="button" id="uploadButton">Submit</button>
             </form>
-    
+
+            <img id="preview-image" style="max-width: 300px; display: none; margin-top: 10px;" alt="Uploaded image preview">
             <div id="prediction-result-form"></div>
         </div>
     </div>
