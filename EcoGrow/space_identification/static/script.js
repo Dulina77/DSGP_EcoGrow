@@ -1,4 +1,3 @@
-
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 const captureButton = document.getElementById("capture-btn");
@@ -8,9 +7,6 @@ const predictionResultCam = document.getElementById("prediction-result-cam");
 const predictionResultForm = document.getElementById("prediction-result-form");
 const fileInput = document.getElementById("file");
 const ctx = canvas.getContext("2d");
-
-
-
 
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({ video: true })
@@ -22,11 +18,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         });
 }
 
-
 captureButton.addEventListener("click", () => {
-
-
-
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -39,11 +31,9 @@ captureButton.addEventListener("click", () => {
     submitButton.style.display = "inline-block";
 });
 
-
 newButton.addEventListener("click", () => {
     video.style.display = "block";
     canvas.style.display = "none";
-
 
     captureButton.style.display = "inline-block";
     newButton.style.display = "none";
@@ -51,8 +41,7 @@ newButton.addEventListener("click", () => {
 });
 
 submitButton.addEventListener("click", () => {
-
-    if (predictionResultForm.innerText.trim()){
+    if (predictionResultForm.innerText.trim()) {
         alert("Image is already uploaded. Please Refresh to capture an image");
         return;
     }
@@ -73,15 +62,38 @@ submitButton.addEventListener("click", () => {
     }, "image/png");
 });
 
+// File input change event to show preview
+fileInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const previewImage = document.getElementById('preview-image');
+    
+    if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        previewImage.src = imageUrl;
+        previewImage.style.display = 'block';
+        
+        previewImage.onload = function() {
+            URL.revokeObjectURL(imageUrl);
+        };
+    } else {
+        previewImage.style.display = 'none';
+    }
+});
+
 document.getElementById("uploadButton").addEventListener("click", () => {
     const imageCaptured = ctx && ctx.getImageData(0, 0, canvas.width, canvas.height).data.some(channel => channel !== 0);
-    //const predictionResultCam = document.getElementById("prediction-result-cam");
 
-    if (predictionResultCam.innerText.trim()){
-        alert("Image is already captured. Please reftresh to upload file");
+    if (predictionResultCam.innerText.trim()) {
+        alert("Image is already captured. Please refresh to upload file");
         return;
     }
+    
     const fileInput = document.getElementById("file");
+    if (!fileInput.files[0]) {
+        alert("Please select an image file first");
+        return;
+    }
+
     const formData = new FormData();
     formData.append("file", fileInput.files[0]);
 
@@ -92,63 +104,53 @@ document.getElementById("uploadButton").addEventListener("click", () => {
     .then(response => response.json())
     .then(data => {
         predictionResultForm.innerText = `Prediction: ${data.prediction}`;
+        document.getElementById('preview-image').style.display = 'block'; 
     })
     .catch(error => console.error("Error:", error));
-    });
+});
 
-
-function validation(){
-
+function validation() {
     const imageCaptured = ctx && ctx.getImageData(0, 0, canvas.width, canvas.height).data.some(channel => channel !== 0);
     const fileInput = document.getElementById("file");
-    const fileuploaded =  fileInput && fileInput.files.length > 0;
+    const fileUploaded = fileInput && fileInput.files.length > 0;
 
-    if (imageCaptured || fileuploaded ){
+    if (imageCaptured || fileUploaded) {
         const predictionResultCam = document.getElementById("prediction-result-cam")?.innerText.trim();
         const predictionResultForm = document.getElementById("prediction-result-form")?.innerText.trim();
 
         let result = predictionResultForm || predictionResultCam;
         result = result.replace("Prediction: ", "").trim();
 
-        
-       // if (predictionResultCam && predictionResultCam !== "") {
-       //     result = predictionResultCam;
-       // } else if (predictionResultForm && predictionResultForm !== "") {
-       //     result = predictionResultForm;
-       // } 
-
-       if(result == "Not a Balcony or Indoor Space") { 
-            alert("Please Input a image or a balcony or indoor space");
+        if (result === "Not a Balcony or Indoor Space") {
+            alert("Please Input an image of a balcony or indoor space");
             return;
-       }
+        }
 
-
-       result = result.toLowerCase().includes("balcony") ? "Balcony" : result.toLowerCase().includes("indoor") ? "Indoor" : result;
+        result = result.toLowerCase().includes("balcony") ? "Balcony" : result.toLowerCase().includes("indoor") ? "Indoor" : result;
 
         if (!result) {
             alert("Prediction not found. Please try again.");
             return;
         }
-        
+
         fetch("/space_identification/store_result", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ result: result })
         })
         .then(response => {
-            console.log("Response status:", response.status); 
+            console.log("Response status:", response.status);
             return response.json();
         })
         .then(data => {
             if (data.success) {
-                window.location.href = "/plant_prediction";  
+                window.location.href = "/plant_prediction";
             } else {
                 alert("Failed to store prediction.");
             }
         })
-
-
-    }else{
-        alert("Please input an image to continue")
+        .catch(error => console.error("Error:", error));
+    } else {
+        alert("Please input an image to continue");
     }
 }

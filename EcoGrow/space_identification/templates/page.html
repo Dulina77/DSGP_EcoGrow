@@ -3,56 +3,442 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Capture</title>
-    <link rel="stylesheet" href="static\style.css">
-
+    <title>Plant Recommendation | EcoGrow</title>
     
+    <!-- Custom Theme files from Home page -->
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link href="{{ url_for('static', filename='css/style.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/zoomslider.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/cm-overlay.css') }}" />
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet">
+    
+    <!-- Web fonts from Home page -->
+    <link href="//fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Mukta+Mahee:200,300,400,500,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
+    
+    
+    <style>
+        body {
+            margin: 0;
+            padding-top: 120px; 
+        }
+        .w3_agilits_banner_bootm {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: #000; 
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #inner-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .video-container {
+            position: relative;
+            width: 50%;
+            margin: auto;
+        }
+        video, canvas {
+            width: 100%;
+            max-width: 500px;
+            display: block;
+            border-radius: 10px;
+            margin-bottom: 10%;
+        }
+        .controls {
+            margin-top: 10px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #036f0c; 
+            color: white;
+            cursor: pointer;
+            font-family: 'Mukta Mahee', sans-serif;
+            margin: 0 5px;
+            transition: .5s ease-in;
+        }
+        button:hover {
+            background-color: #fff;
+            color: #000;
+        }
+        #submit-btn, #new-btn {
+            display: none;
+        }
+        #cam-Container {
+            width: 50%;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        #form {
+            width: 37%;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #nextButton {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #preview-image {
+            width: 100%;
+            max-width: 300px;
+            display: none;
+            border-radius: 10px;
+            margin-top: 10px;
+            margin-bottom: 10%;
+        }
+        h1 {
+            font-size: 3em;
+            text-transform: capitalize;
+            text-align: center;
+            color: #333;
+            margin: 0.5em 0;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+        h4 {
+            font-size: 1.5em;
+            color: #036f0c;
+            margin-bottom: 1em;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+        #prediction-result-cam, #prediction-result-form {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 1em;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+        input[type="file"] {
+            margin: 15px 0;
+            padding: 5px;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+    </style>
 </head>
 <body>
-
-    <nav class = "navBar">
-        <a href="#" id="name">EcoGrow</a>
-        <a href="#" id="about">About</a>
-        <a href="#" id="chatbot">ChatBot</a>
-        <a href="{{ url_for('disease_identification.home') }}" id="disease">Disease Identification</a>
-        <a href="#" id="plant_predict">Predict</a>
-    </nav>
-
-    <h1>Plant Recommendation</h1>
-
-    <div id="container">
-        <div id="cam-Container">
-            <h4>Capture an Image of the Suitable Area</h4>
-            <div class="video-container">
-                <video id="video" autoplay></video>
-                <canvas id="canvas" style="display: none;"></canvas>
+    <!-- Navigation from Home Page -->
+    <div class="w3_agilits_banner_bootm">
+        <div class="container" style="padding-bottom: 20px;">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="EcoGrow Logo">
             </div>
-    
-            <div class="controls">
-                <button id="capture-btn">Capture</button>
-                <button id="new-btn" style="display: none;">New Image</button>
-                <button id="submit-btn">Submit</button>
+            <div class="agileits_w3layouts_nav">
+                <div id="toggle_m_nav">
+                    <div id="m_nav_menu" class="m_nav">
+                        <div class="m_nav_ham w3_agileits_ham" id="m_ham_1"></div>
+                        <div class="m_nav_ham" id="m_ham_2"></div>
+                        <div class="m_nav_ham" id="m_ham_3"></div>
+                    </div>
+                </div>
+                <div id="m_nav_container" class="m_nav wthree_bg">
+                    <nav class="menu menu--sebastian">
+                        <ul id="m_nav_list" class="m_nav menu__list">
+                            <li class="m_nav_item menu__item" id="m_nav_item_1">
+                                <a href="#" class="menu__link"> Home </a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_2">
+                                <a href="EcoGrow/templates/about.html" class="menu__link"> About Us </a>
+                            </li>
+                            <li class="m_nav_item menu__item menu__item--current" id="moble_nav_item_4">
+                                <a href="{{ url_for('space_identification.upload_image') }}" class="menu__link">Plant Prediction</a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_3">
+                                <a href="{{ url_for('disease_identification.home') }}" class="menu__link">Disease Identification</a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_4">
+                                <a href="{{ url_for('chatbot.chat') }}" class="menu__link">AgriHelp Chatbot</a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_6">
+                                <a href="templates/contact.html" class="menu__link"> Contact Us </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-    
-            <h3 id="prediction-result-cam"></h3>
-        </div>    
-    
-        <div id="form">
-            <h4>Submit an image of the area</h4>
-            <form id="uploadForm" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" id="file">
-                <button type="button" id="uploadButton">Submit</button>
-            </form>
-    
-            <div id="prediction-result-form"></div>
+        </div>
+        <div class="w3_agilits_inner_bottom">
+            <div class="wthree_agile_login">
+                <marquee scrollamount="10" direction="left" behavior="scroll" id="scroll_news">
+                    <div onMouseOver="document.getElementById('scroll_news').stop();"
+                         onMouseOut="document.getElementById('scroll_news').start();">
+                        <p style="color: white">
+                            <b>ECOGROW</b> - Sustainable farming for a healthier planet, fresher food for you.
+                            <b> | </b> <b>Eat Healthy Vegetables </b> - Grow green, eat clean, and nourish the future! 🌱🌍
+                        </p>
+                    </div>
+                </marquee>
+            </div>
         </div>
     </div>
-    
-    <div id="nextButton">
-        <button id="nextButton" type="button" onclick="validation()">Next</button>
-    </div> 
-    
-    <script src="static\script.js"></script>
+    <!-- End Navigation -->
 
+    <div class="section-w3ls">
+        <div class="container">
+            <h1>Plant Recommendation</h1>
+            <div id="inner-container">
+                <div id="cam-Container">
+                    <h4>Capture an Image of the Suitable Area</h4>
+                    <div class="video-container">
+                        <video id="video" autoplay></video>
+                        <canvas id="canvas" style="display: none;"></canvas>
+                    </div>
+                    <div class="controls">
+                        <button id="capture-btn">Capture</button>
+                        <button id="new-btn">New Image</button>
+                        <button id="submit-btn">Submit</button>
+                    </div>
+                    <div id="prediction-result-cam"></div>
+                </div>    
+                <div id="form">
+                    <h4>Submit an Image of the Area</h4>
+                    <form id="uploadForm" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" id="file" accept="image/*">
+                        <button type="button" id="uploadButton">Submit</button>
+                    </form>
+                    <img id="preview-image" alt="Uploaded image preview">
+                    <div id="prediction-result-form"></div>
+                </div>
+            </div>
+            <div id="nextButton">
+                <button type="button" onclick="validation()">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer from Home Page -->
+    <div class="agile-footer w3ls-section">
+        <div class="container">
+            <div class="list-footer">
+                <ul class="footer-nav">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="{{ url_for('space_identification.upload_image') }}">Plant Prediction</a></li>
+                    <li><a href="{{ url_for('disease_identification.home') }}">Disease Identification</a></li>
+                    <li><a href="{{ url_for('chatbot.chat') }}">AgriHelp Chatbot</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="agileits_w3layouts-footer-bottom">
+                <div class="w////////////////////////////////////////////////////////////////3_agile-footer-grids">
+                    <div class="col-md-3 w3_agile-footer1 f1" style="width: 50%;">
+                        <h2 class="f1" style="color: white;">About Us</h2><br>
+                        <p>We have a lot of beneficial herbs in our country about which we really don’t know and for the same reason Agro-Farm has pledged to give you information about everything you need. We provide all the details and articles related to useful herbs, their benefits and risks.</p>
+                    </div>
+                    <div class="col-md-3 w3_agile-footer1 f3" style="float: right;">
+                        <h5>Follow Us</h5>
+                        <ul class="footer-social-icons">
+                            <li><a href="#" target="_blank"><i class="fa icon1 fa-facebook icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon6 fa-linkedin icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon2 fa-twitter icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon3 fa-instagram icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon4 fa-youtube icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon5 fa-google-plus icons" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer -->
+
+    <!-- Scripts from Home Page -->
+    <script src="{{ url_for('static', filename='js/jquery-2.2.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modernizr-2.6.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.zoomslider.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.tools.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.mobile.custom.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.cm-overlay.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.cm-overlay').cmOverlay();
+        });
+    </script>
+
+    <!-- Camera Capture and Upload Script -->
+    <script>
+        const video = document.getElementById("video");
+        const canvas = document.getElementById("canvas");
+        const captureButton = document.getElementById("capture-btn");
+        const newButton = document.getElementById("new-btn");
+        const submitButton = document.getElementById("submit-btn");
+        const predictionResultCam = document.getElementById("prediction-result-cam");
+        const predictionResultForm = document.getElementById("prediction-result-form");
+        const fileInput = document.getElementById("file");
+        const ctx = canvas.getContext("2d");
+
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    video.srcObject = stream;
+                })
+                .catch((error) => {
+                    console.error("Can't access the camera", error);
+                });
+        }
+
+        captureButton.addEventListener("click", () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            video.style.display = "none";
+            canvas.style.display = "block";
+
+            captureButton.style.display = "none";
+            newButton.style.display = "inline-block";
+            submitButton.style.display = "inline-block";
+        });
+
+        newButton.addEventListener("click", () => {
+            video.style.display = "block";
+            canvas.style.display = "none";
+
+            captureButton.style.display = "inline-block";
+            newButton.style.display = "none";
+            submitButton.style.display = "none";
+        });
+
+        submitButton.addEventListener("click", () => {
+            if (predictionResultForm.innerText.trim()) {
+                alert("Image is already uploaded. Please refresh to capture an image");
+                return;
+            }
+
+            canvas.toBlob((blob) => {
+                const formData = new FormData();
+                formData.append("file", blob, "captured-image.png");
+
+                fetch("/space_identification/", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    predictionResultCam.innerText = `Prediction: ${data.prediction}`;
+                })
+                .catch(error => console.error("Error:", error));
+            }, "image/png");
+        });
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const previewImage = document.getElementById('preview-image');
+            
+            if (file) {
+                const imageUrl = URL.createObjectURL(file);
+                previewImage.src = imageUrl;
+                previewImage.style.display = 'block';
+                
+                previewImage.onload = function() {
+                    URL.revokeObjectURL(imageUrl);
+                };
+            } else {
+                previewImage.style.display = 'none';
+            }
+        });
+
+        document.getElementById("uploadButton").addEventListener("click", () => {
+            const imageCaptured = ctx && ctx.getImageData(0, 0, canvas.width, canvas.height).data.some(channel => channel !== 0);
+
+            if (predictionResultCam.innerText.trim()) {
+                alert("Image is already captured. Please refresh to upload file");
+                return;
+            }
+            
+            const fileInput = document.getElementById("file");
+            if (!fileInput.files[0]) {
+                alert("Please select an image file first");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+
+            fetch("/space_identification/", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                predictionResultForm.innerText = `Prediction: ${data.prediction}`;
+                document.getElementById('preview-image').style.display = 'block'; 
+            })
+            .catch(error => console.error("Error:", error));
+        });
+
+        function validation() {
+            const imageCaptured = ctx && ctx.getImageData(0, 0, canvas.width, canvas.height).data.some(channel => channel !== 0);
+            const fileInput = document.getElementById("file");
+            const fileUploaded = fileInput && fileInput.files.length > 0;
+
+            if (imageCaptured || fileUploaded) {
+                const predictionResultCam = document.getElementById("prediction-result-cam")?.innerText.trim();
+                const predictionResultForm = document.getElementById("prediction-result-form")?.innerText.trim();
+
+                let result = predictionResultForm || predictionResultCam;
+                result = result.replace("Prediction: ", "").trim();
+
+                if (result === "Not a Balcony or Indoor Space") {
+                    alert("Please input an image of a balcony or indoor space");
+                    return;
+                }
+
+                result = result.toLowerCase().includes("balcony") ? "Balcony" : result.toLowerCase().includes("indoor") ? "Indoor" : result;
+
+                if (!result) {
+                    alert("Prediction not found. Please try again.");
+                    return;
+                }
+
+                fetch("/space_identification/store_result", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ result: result })
+                })
+                .then(response => {
+                    console.log("Response status:", response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "/plant_prediction";
+                    } else {
+                        alert("Failed to store prediction.");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            } else {
+                alert("Please input an image to continue");
+            }
+        }
+    </script>
 </body>
 </html>
