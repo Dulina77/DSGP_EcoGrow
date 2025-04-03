@@ -1,12 +1,8 @@
 import os
 import sqlite3
-import requests
 import re
 from rasa_sdk import Action
 from sentence_transformers import SentenceTransformer, util
-
-# Set fallback API base URL
-FLASK_API_URL = "http://localhost:5000/api"
 
 # Define DB paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -18,15 +14,6 @@ PROJECT_ROOT = os.path.dirname(BASE_DIR)  # goes up from /actions
 SBERT_MODEL_PATH = os.path.join(PROJECT_ROOT, "sbert_model")
 sbert_model = SentenceTransformer(SBERT_MODEL_PATH)
 
-# Helper to sanitize fallback query (removes filler phrases)
-def sanitize_for_fallback(text):
-    text = text.lower().strip().replace("?", "")
-    text = re.sub(
-        r"\b(what is|tell me about|information on|how to grow|how do i grow|how to cure|how to treat|watering method for|sunlight required for|care instructions for)\b",
-        "",
-        text,
-    )
-    return text.strip()
 
 # ======================
 # 🌿 Disease Action
@@ -84,29 +71,7 @@ class ActionGetPlantInfo(Action):
         except Exception as e:
             print(f"[ERROR] Local DB disease lookup failed: {e}")
 
-        # Fallback to Wikipedia
-        fallback_name = sanitize_for_fallback(user_query)
-        print(f"[INFO] Looking up disease fallback: {fallback_name}")
-
-        try:
-            r = requests.get(f"{FLASK_API_URL}/plant_disease", params={"name": fallback_name})
-            data = r.json()
-            description = data.get("description", "").strip()
-            source = data.get("source", "N/A")
-
-            if description:
-                response = (
-                    f"**{data.get('disease_name', fallback_name.title())} (from external source)**\n\n"
-                    f"**Description:** {description}\n\n"
-                    f"**Source:** {source}"
-                )
-            else:
-                response = "I couldn't find any info on that disease. Try another one?"
-        except Exception as e:
-            response = "Something went wrong fetching external disease info."
-            print(f"[ERROR] Disease fallback exception: {e}")
-
-        dispatcher.utter_message(text=response)
+        dispatcher.utter_message(text="Sorry, I couldn't find information about that disease in the database.")
         return []
 
 
@@ -176,26 +141,5 @@ class ActionGetPlantingTechniques(Action):
         except Exception as e:
             print(f"[ERROR] Local DB planting lookup failed: {e}")
 
-        # Fallback to OpenFarm
-        fallback_name = sanitize_for_fallback(user_query)
-        print(f"[INFO] Looking up planting fallback: {fallback_name}")
-
-        try:
-            r = requests.get(f"{FLASK_API_URL}/planting_techniques", params={"name": fallback_name})
-            data = r.json()
-            if "error" not in data:
-                response = (
-                    f"**{data.get('plant_name', fallback_name.title())} (from external source)**\n\n"
-                    f"**Description:** {data.get('description', 'No info')}\n\n"
-                    f"**Sun Requirements:** {data.get('sun_requirements', 'Unknown')}\n\n"
-                    f"**Sowing Method:** {data.get('sowing_method', 'Unknown')}\n\n"
-                    f"**Source:** {data.get('source', 'N/A')}"
-                )
-            else:
-                response = "I couldn’t find anything for that plant. Try a different name?"
-        except Exception as e:
-            response = "Something went wrong while trying to look that up externally."
-            print(f"[ERROR] Planting fallback exception: {e}")
-
-        dispatcher.utter_message(text=response)
+        dispatcher.utter_message(text="Sorry, I couldn't find planting techniques for that plant in the database.")
         return []
