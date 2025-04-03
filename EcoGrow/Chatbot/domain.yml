@@ -34,13 +34,13 @@ slots:
 
 responses:
   utter_greet:
-    - text: "Hey! How are you?"  # Response when the user greets the bot
+    - text: "👋 Welcome to Agri Bot! Which plant or disease can I help you with today?"
 
   utter_goodbye:
     - text: "Bye"  # Response when the user says goodbye
 
   utter_iamabot:
-    - text: "I am a bot, powered by Rasa."  # Response when the user asks if it's a bot
+    - text: "I am Agri Bot, your helpful assistant for plant diseases and growing tips!"
 
   utter_happy:
     - text: "Great, carry on!"  # Response when the user expresses happiness
