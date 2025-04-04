@@ -17,11 +17,11 @@
     <link href="//fonts.googleapis.com/css?family=Mukta+Mahee:200,300,400,500,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
     
-    
+    <!-- Additional styles for Plant Recommendation -->
     <style>
         body {
             margin: 0;
-            padding-top: 120px; 
+            padding-top: 120px; /* Accommodate fixed navbar */
         }
         .w3_agilits_banner_bootm {
             position: fixed;
@@ -29,7 +29,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background: #000; 
+            background: #000; /* Match the black background */
         }
         .container {
             width: 100%;
@@ -68,7 +68,7 @@
             font-size: 16px;
             border: none;
             border-radius: 4px;
-            background-color: #036f0c; 
+            background-color: #036f0c; /* Matching Home page button color */
             color: white;
             cursor: pointer;
             font-family: 'Mukta Mahee', sans-serif;
@@ -159,7 +159,7 @@
                     <nav class="menu menu--sebastian">
                         <ul id="m_nav_list" class="m_nav menu__list">
                             <li class="m_nav_item menu__item" id="m_nav_item_1">
-                                <a href="#" class="menu__link"> Home </a>
+                                <a href="{{ url_for('home') }}" class="menu__link"> Home </a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_2">
                                 <a href="EcoGrow/templates/about.html" class="menu__link"> About Us </a>
@@ -197,6 +197,7 @@
     </div>
     <!-- End Navigation -->
 
+    <!-- Main Content -->
     <div class="section-w3ls">
         <div class="container">
             <h1>Plant Recommendation</h1>
@@ -235,7 +236,7 @@
         <div class="container">
             <div class="list-footer">
                 <ul class="footer-nav">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="{{ url_for('home') }}" class="menu__link"> Home </a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="{{ url_for('space_identification.upload_image') }}">Plant Prediction</a></li>
                     <li><a href="{{ url_for('disease_identification.home') }}">Disease Identification</a></li>

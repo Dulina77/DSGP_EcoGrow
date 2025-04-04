@@ -159,7 +159,7 @@
                     <nav class="menu menu--sebastian">
                         <ul id="m_nav_list" class="m_nav menu__list">
                             <li class="m_nav_item menu__item" id="m_nav_item_1">
-                                <a href="#" class="menu__link"> Home </a>
+                                <a href="{{ url_for('home') }}" class="menu__link"> Home </a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_2">
                                 <a href="EcoGrow/templates/about.html" class="menu__link"> About Us </a>
@@ -236,7 +236,7 @@
         <div class="container">
             <div class="list-footer">
                 <ul class="footer-nav">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="{{ url_for('home') }}" class="menu__link"> Home </a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="{{ url_for('space_identification.upload_image') }}">Plant Prediction</a></li>
                     <li><a href="{{ url_for('disease_identification.home') }}">Disease Identification</a></li>
