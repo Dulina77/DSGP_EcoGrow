@@ -118,7 +118,7 @@
                                 <a href="{{ url_for('home') }}" class="menu__link"> Home </a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_2">
-                                <a href="EcoGrow/templates/about.html" class="menu__link"> About Us </a>
+                                <a href="{{ url_for('about') }}" class="menu__link"> About Us </a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_4">
                                 <a href="{{ url_for('space_identification.upload_image') }}" class="menu__link">Plant Prediction</a>
@@ -172,7 +172,7 @@
             <div class="list-footer">
                 <ul class="footer-nav">
                     <li><a href="{{ url_for('home') }}" class="menu__link"> Home </a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li><a href="{{ url_for('about') }}" class="menu__link">About</a></li>
                     <li><a href="{{ url_for('space_identification.upload_image') }}">Plant Prediction</a></li>
                     <li><a href="{{ url_for('disease_identification.home') }}">Disease Identification</a></li>
                     <li><a href="{{ url_for('chatbot.chat') }}">AgriHelp Chatbot</a></li>

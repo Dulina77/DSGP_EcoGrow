@@ -74,10 +74,10 @@
                     <nav class="menu menu--sebastian">
                         <ul id="m_nav_list" class="m_nav menu__list">
                             <li class="m_nav_item menu__item menu__item--current" id="m_nav_item_1">
-                                <a href="#" class="menu__link"> Home </a>
+                                <a href="{{ url_for('home') }}" class="menu__link"> Home </a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_2">
-                                <a href="EcoGrow\templates\about.html" class="menu__link"> About Us </a>
+                                <a href="{{ url_for('about') }}" class="menu__link"> About Us </a>
 
                             <li class="m_nav_item menu__item" id="moble_nav_item_4">
                                 <a href="{{ url_for('space_identification.upload_image') }}" class="menu__link">Plant Prediction</a>
@@ -89,7 +89,7 @@
                                 <a href="{{ url_for('chatbot.chat') }}" class="menu__link">AgriHelp Chatbot</a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_6">
-                                <a href="tempates/contact.html" class="menu__link"> Contact Us </a>
+                                <a href="{{ url_for('contact') }}" class="menu__link"> Contact Us </a>
                             </li>
                         </ul>
                     </nav>
@@ -194,9 +194,7 @@
             </h3>
             <h5>Strive for the Best not just Good</h5>
             <div class="col-md-7  w3ls-about-left">
-                <p>We have a lot of Benefitial herbs in our country about which we really dont know and for the same
-                    reason Agro-Farm has pledged to give you information about everything you need. We provide all the
-                    details and articles related to useful herbs, their benefits and risks.</p>
+                <p></p>
             </div>
             <div class="col-md-5 w3ls-row">
                 <div class="col-md-6 col-sm-6 wthree-about-left">
@@ -225,10 +223,10 @@
             <div class="list-footer">
                 <ul class="footer-nav">
                     <li>
-                        <a href="#">Home</a>
+                        <a href="{{ url_for('home') }}" class="menu__link">Home</a>
                     </li>
                     <li>
-                        <a href="about.html">About</a>
+                        <a href="{{ url_for('about') }}" class="menu__link">About</a>
                     </li>
 
                     <li>
