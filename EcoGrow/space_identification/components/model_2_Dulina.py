@@ -4,7 +4,7 @@ from tensorflow.keras.applications.vgg16 import preprocess_input # type: ignore
 from tensorflow.keras.preprocessing.image import img_to_array, load_img  # type: ignore
 import numpy as np
 
-model = load_model(r"C:\Users\dulin\DSGP_2\EcoGrow\space_identification\Training\balcony_identification_model.h5")
+model = load_model(r"C:\Users\dulin\DSGP_2\EcoGrow\space_identification\Training\resnet50_three_class_model.h5")
 
 class_names = ["Balcony", "Indoor", "None"]
 

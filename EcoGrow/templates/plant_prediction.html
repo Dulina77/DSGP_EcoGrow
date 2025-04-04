@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Prediction | EcoGrow</title>
+    
+    <!-- Custom Theme files from Home page -->
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link href="{{ url_for('static', filename='css/style.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/zoomslider.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/cm-overlay.css') }}" />
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet">
+    
+    <!-- Web fonts from Home page -->
+    <link href="//fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Mukta+Mahee:200,300,400,500,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
+    
+    <!-- Additional styles for Plant Prediction -->
+    <style>
+        /* Override container styles to match Home page */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        /* Other existing styles */
+        #weather-status {
+            color: #666;
+            margin-top: 10px;
+        }
+        h2 {
+            color: #333;
+            font-size: 3em;
+            text-transform: capitalize;
+            margin: 0.5em 0;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+        input[type="number"] {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 300px;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+        input[type="radio"] {
+            margin: 5px 5px 5px 0;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #036f0c; /* Matching Home page button color */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: 'Mukta Mahee', sans-serif;
+            transition: .5s ease-in;
+        }
+        button:hover {
+            background: #fff;
+            color: #000;
+        }
+        .prediction {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #333;
+            font-family: 'Mukta Mahee', sans-serif;
+            font-size: 1.2em;
+        }
+        /* Adjust body to accommodate fixed navbar */
+        body {
+            margin: 0; 
+            padding-top: 120px; 
+        }
+        .w3_agilits_banner_bootm {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; /* Ensure it stays above other content */
+            background: #000; /* Match the black background seen in the screenshot */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation from Home Page -->
+    <div class="w3_agilits_banner_bootm">
+        <div class="container" style="padding-bottom: 20px;">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="EcoGrow Logo">
+            </div>
+            <div class="agileits_w3layouts_nav">
+                <div id="toggle_m_nav">
+                    <div id="m_nav_menu" class="m_nav">
+                        <div class="m_nav_ham w3_agileits_ham" id="m_ham_1"></div>
+                        <div class="m_nav_ham" id="m_ham_2"></div>
+                        <div class="m_nav_ham" id="m_ham_3"></div>
+                    </div>
+                </div>
+                <div id="m_nav_container" class="m_nav wthree_bg">
+                    <nav class="menu menu--sebastian">
+                        <ul id="m_nav_list" class="m_nav menu__list">
+                            <li class="m_nav_item menu__item" id="m_nav_item_1">
+                                <a href="#" class="menu__link"> Home </a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_2">
+                                <a href="EcoGrow/templates/about.html" class="menu__link"> About Us </a>
+                            </li>
+                            <li class="m_nav_item menu__item menu__item--current" id="moble_nav_item_4">
+                                <a href="#" class="menu__link">Plant Prediction</a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_3">
+                                <a href="{{ url_for('disease_identification.home') }}" class="menu__link">Disease Identification</a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_4">
+                                <a href="{{ url_for('chatbot.chat') }}" class="menu__link">AgriHelp Chatbot</a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_6">
+                                <a href="templates/contact.html" class="menu__link"> Contact Us </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="w3_agilits_inner_bottom">
+            <div class="wthree_agile_login">
+                <marquee scrollamount="10" direction="left" behavior="scroll" id="scroll_news">
+                    <div onMouseOver="document.getElementById('scroll_news').stop();"
+                         onMouseOut="document.getElementById('scroll_news').start();">
+                        <p style="color: white">
+                            <b>ECOGROW</b> - Sustainable farming for a healthier planet, fresher food for you.
+                            <b> | </b> <b>Eat Healthy Vegetables </b> - Grow green, eat clean, and nourish the future! 🌱🌍
+                        </p>
+                    </div>
+                </marquee>
+            </div>
+        </div>
+    </div>
+    <!-- End Navigation -->
+
+    <!-- Main Content -->
+    <div class="section-w3ls">
+        <div class="container">
+            <h2>Plant Prediction Model</h2>
+            <form action="/plant_prediction/predict" method="post">
+                <label>Location:</label><br>
+                <input type="radio" id="colombo" name="Location" value="0" onclick="fetchWeather(0)">
+                <label for="colombo">Colombo</label>
+                <input type="radio" id="kandy" name="Location" value="1" onclick="fetchWeather(1)">
+                <label for="kandy">Kandy</label>
+                <br><br>
+                <label for="Temperature">Temperature (°C):</label>
+                <input type="number" id="temperatureInput" name="Temperature" step="any" required>
+                <label for="Precipitation">Precipitation (mm):</label>
+                <input type="number" id="precipitationInput" name="Precipitation" step="any" required>
+                <label for="Humidity">Humidity (%):</label>
+                <input type="number" id="humidityInput" name="Humidity" step="any" required>
+                <label for="Place">Place:</label>
+                <p>{{ place }}</p>
+                <button type="submit">Predict</button>
+            </form>
+            {% if prediction %}
+            <p class="prediction">Prediction: {{ prediction }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Footer from Home Page -->
+    <div class="agile-footer w3ls-section">
+        <div class="container">
+            <div class="list-footer">
+                <ul class="footer-nav">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#">Plant Prediction</a></li>
+                    <li><a href="{{ url_for('disease_identification.home') }}">Disease Identification</a></li>
+                    <li><a href="{{ url_for('chatbot.chat') }}">AgriHelp Chatbot</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="agileits_w3layouts-footer-bottom">
+                <div class="w3_agile-footer-grids">
+                    <div class="col-md-3 w3_agile-footer1 f1" style="width: 50%;">
+                        <h2 class="f1" style="color: white;">About Us</h2><br>
+                        <p>We have a lot of beneficial herbs in our country about which we really don’t know and for the same reason Agro-Farm has pledged to give you information about everything you need. We provide all the details and articles related to useful herbs, their benefits and risks.</p>
+                    </div>
+                    <div class="col-md-3 w3_agile-footer1 f3" style="float: right;">
+                        <h5>Follow Us</h5>
+                        <ul class="footer-social-icons">
+                            <li><a href="#" target="_blank"><i class="fa icon1 fa-facebook icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon6 fa-linkedin icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon2 fa-twitter icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon3 fa-instagram icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon4 fa-youtube icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon5 fa-google-plus icons" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer -->
+
+    <!-- Scripts from Home Page -->
+    <script src="{{ url_for('static', filename='js/jquery-2.2.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modernizr-2.6.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.zoomslider.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.tools.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.mobile.custom.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.cm-overlay.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.cm-overlay').cmOverlay();
+        });
+    </script>
+
+    <!-- Weather API Script -->
+    <script>
+        async function fetchWeather(locationValue) {
+            let apiKey = "972f6b959f2f4fee93940205252502"; // Replace with your WeatherAPI key
+            let locationName = locationValue === 0 ? "Colombo" : "Kandy";
+            let url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${locationName}&aqi=no`;
+
+            try {
+                let response = await fetch(url);
+                let data = await response.json();
+
+                if (data.error) {
+                    console.error("Error fetching weather:", data.error.message);
+                    return;
+                }
+
+                // Auto-fill weather values
+                document.getElementById("temperatureInput").value = data.current.temp_c;
+                document.getElementById("humidityInput").value = data.current.humidity;
+                document.getElementById("precipitationInput").value = data.current.precip_mm || 0;
+            } catch (error) {
+                console.error("Error fetching weather data:", error);
+            }
+        }
+    </script>
+</body>
+</html>

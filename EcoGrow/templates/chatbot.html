@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Helper Chatbot | EcoGrow</title>
+    
+    <!-- Custom Theme files from Home page -->
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link href="{{ url_for('static', filename='css/style.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/zoomslider.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/cm-overlay.css') }}" />
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet">
+    
+    <!-- Web fonts from Home page -->
+    <link href="//fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Mukta+Mahee:200,300,400,500,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
+    
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Additional styles for Chatbot -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Mukta Mahee', sans-serif;
+            margin: 0;
+            padding-top: 120px; /* Accommodate fixed navbar */
+            background-color: #f0f8e8; /* Retained from original */
+        }
+        .w3_agilits_banner_bootm {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: #000; /* Match the black background */
+        }
+        .section-w3ls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 120px); /* Adjust for navbar */
+        }
+        .chat-container {
+            width: 700px;
+            height: 820px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .chat-header {
+            background: #036f0c; /* Matching Home page button color */
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+        .chat-box {
+            flex-grow: 1;
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-bubble {
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            max-width: 70%;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+        .user-message {
+            background: #f0f4f0; 
+            color: #111111; 
+            align-self: flex-end;
+        }
+        .user-message * {
+            color: #111111; 
+        }
+        .bot-message {
+            background: #f0f4f0; 
+            color: #191818;
+            align-self: flex-start;
+        }
+        .bot-message * {
+            color: #191818; 
+        }
+        .chat-input-container {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+        .chat-input-container input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+        .chat-input-container button {
+            padding: 10px 20px;
+            background: #036f0c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Mukta Mahee', sans-serif;
+            transition: .5s ease-in;
+        }
+        .chat-input-container button:hover {
+            background: #fff;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation from Home Page -->
+    <div class="w3_agilits_banner_bootm">
+        <div class="container" style="padding-bottom: 20px;">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="EcoGrow Logo">
+            </div>
+            <div class="agileits_w3layouts_nav">
+                <div id="toggle_m_nav">
+                    <div id="m_nav_menu" class="m_nav">
+                        <div class="m_nav_ham w3_agileits_ham" id="m_ham_1"></div>
+                        <div class="m_nav_ham" id="m_ham_2"></div>
+                        <div class="m_nav_ham" id="m_ham_3"></div>
+                    </div>
+                </div>
+                <div id="m_nav_container" class="m_nav wthree_bg">
+                    <nav class="menu menu--sebastian">
+                        <ul id="m_nav_list" class="m_nav menu__list">
+                            <li class="m_nav_item menu__item" id="m_nav_item_1">
+                                <a href="#" class="menu__link"> Home </a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_2">
+                                <a href="EcoGrow/templates/about.html" class="menu__link"> About Us </a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_4">
+                                <a href="{{ url_for('space_identification.upload_image') }}" class="menu__link">Plant Prediction</a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_3">
+                                <a href="{{ url_for('disease_identification.home') }}" class="menu__link">Disease Identification</a>
+                            </li>
+                            <li class="m_nav_item menu__item menu__item--current" id="moble_nav_item_4">
+                                <a href="{{ url_for('chatbot.chat') }}" class="menu__link">AgriHelp Chatbot</a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_6">
+                                <a href="templates/contact.html" class="menu__link"> Contact Us </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="w3_agilits_inner_bottom">
+            <div class="wthree_agile_login">
+                <marquee scrollamount="10" direction="left" behavior="scroll" id="scroll_news">
+                    <div onMouseOver="document.getElementById('scroll_news').stop();"
+                         onMouseOut="document.getElementById('scroll_news').start();">
+                        <p style="color: white">
+                            <b>ECOGROW</b> - Sustainable farming for a healthier planet, fresher food for you.
+                            <b> | </b> <b>Eat Healthy Vegetables </b> - Grow green, eat clean, and nourish the future! 🌱🌍
+                        </p>
+                    </div>
+                </marquee>
+            </div>
+        </div>
+    </div>
+    <!-- End Navigation -->
+
+    <!-- Main Content -->
+    <div class="section-w3ls">
+        <div class="chat-container">
+            <div class="chat-header">AgroBot</div>
+            <div class="chat-box" id="chat-box"></div>
+            <div class="chat-input-container">
+                <input type="text" id="user-input" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer from Home Page -->
+    <div class="agile-footer w3ls-section">
+        <div class="container">
+            <div class="list-footer">
+                <ul class="footer-nav">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="{{ url_for('space_identification.upload_image') }}">Plant Prediction</a></li>
+                    <li><a href="{{ url_for('disease_identification.home') }}">Disease Identification</a></li>
+                    <li><a href="{{ url_for('chatbot.chat') }}">AgriHelp Chatbot</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="agileits_w3layouts-footer-bottom">
+                <div class="w3_agile-footer-grids">
+                    <div class="col-md-3 w3_agile-footer1 f1" style="width: 50%;">
+                        <h2 class="f1" style="color: white;">About Us</h2><br>
+                        <p>We have a lot of beneficial herbs in our country about which we really don’t know and for the same reason Agro-Farm has pledged to give you information about everything you need. We provide all the details and articles related to useful herbs, their benefits and risks.</p>
+                    </div>
+                    <div class="col-md-3 w3_agile-footer1 f3" style="float: right;">
+                        <h5>Follow Us</h5>
+                        <ul class="footer-social-icons">
+                            <li><a href="#" target="_blank"><i class="fa icon1 fa-facebook icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon6 fa-linkedin icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon2 fa-twitter icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon3 fa-instagram icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon4 fa-youtube icons" aria-hidden="true"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fa icon5 fa-google-plus icons" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer -->
+
+    <!-- Scripts from Home Page -->
+    <script src="{{ url_for('static', filename='js/jquery-2.2.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modernizr-2.6.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.zoomslider.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.tools.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.mobile.custom.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.cm-overlay.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.cm-overlay').cmOverlay();
+        });
+    </script>
+
+    <!-- Chatbot Script -->
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("user-input");
+            const message = userInput.value.trim();
+            if (message === "") return;
+            appendMessage("user", message);
+            userInput.value = "";
+
+            const thinkingMessage = appendMessage("bot", "Bot is thinking...");
+
+            fetch("http://127.0.0.1:5000/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                thinkingMessage.remove();
+                const combinedResponse = data.response ? data.response.join("\n\n") : "Sorry, something went wrong.";
+                appendMessage("bot", combinedResponse);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                thinkingMessage.remove();
+                appendMessage("bot", "Sorry, something went wrong. Please try again.");
+            });
+        }
+
+        function appendMessage(sender, text) {
+            const chatBox = document.getElementById("chat-box");
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("chat-bubble", sender === "user" ? "user-message" : "bot-message");
+
+            // Parse markdown into HTML
+            messageDiv.innerHTML = marked.parse(text);
+
+            // Make links open in a new tab
+            const links = messageDiv.querySelectorAll("a");
+            links.forEach(link => {
+                link.setAttribute("target", "_blank");
+                link.setAttribute("rel", "noopener noreferrer");
+            });
+
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return messageDiv;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
