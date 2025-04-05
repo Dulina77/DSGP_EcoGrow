@@ -2,21 +2,10 @@
 <html lang="zxx">
 
 <head>
-    <title>HOME | EcoGrow</title>
+    <title>EcoGrow - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8" />
-
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-516RM1MHLD"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-516RM1MHLD');
-    </script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    
 
     <script>
         addEventListener("load", function () {
@@ -28,26 +17,31 @@
         }
     </script>
     <!-- Custom Theme files -->
-    <link href="static/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
-    <link href="static/css/style.css" type="text/css" rel="stylesheet" media="all">
-    <!-- banner slider -->
-    <link rel="stylesheet" type="text/css" href="static/css/zoomslider.css" />
-    <!--gallery -->
-    <link type="text/css" rel="stylesheet" href="static/css/cm-overlay.css" />
-    <!-- //gallery -->
-    <script src="static/js/jquery-2.2.3.min.js"></script>
-    <!-- numscroller -->
-    <script type="text/javascript" src="static/js/numscroller-1.0.js"></script>
-    <script src="static/js/bootstrap.js"></script>
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link href="{{ url_for('static', filename='css/style.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/zoomslider.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/cm-overlay.css') }}" />
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet">
+
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="js/numscroller-1.0.js"></script>
+    <script src="js/bootstrap.js"></script>
     <!-- font-awesome icons -->
-    <link href="static/css/font-awesome.css" rel="stylesheet">
+
     <!-- //Custom Theme files -->
     <!-- web-fonts -->
     <link href="//fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Mukta+Mahee:200,300,400,500,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
-
+    <link
+        href="https://fonts.google.com/share?selection.family=Montserrat:ital,wght@0,100..900;1,100..900|Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900|Righteous"
+        rel="stylesheet">
     <!-- //web-fonts -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 </head>
 
 <body>
@@ -74,10 +68,10 @@
                     <nav class="menu menu--sebastian">
                         <ul id="m_nav_list" class="m_nav menu__list">
                             <li class="m_nav_item menu__item menu__item--current" id="m_nav_item_1">
-                                <a href="#" class="menu__link"> Home </a>
+                                <a href="{{ url_for('home') }}" class="menu__link"> Home </a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_2">
-                                <a href="EcoGrow\templates\about.html" class="menu__link"> About Us </a>
+                                <a href="{{ url_for('about') }}" class="menu__link"> About Us </a>
 
                             <li class="m_nav_item menu__item" id="moble_nav_item_4">
                                 <a href="{{ url_for('space_identification.upload_image') }}" class="menu__link">Plant Prediction</a>
@@ -89,7 +83,7 @@
                                 <a href="{{ url_for('chatbot.chat') }}" class="menu__link">AgriHelp Chatbot</a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_6">
-                                <a href="tempates/contact.html" class="menu__link"> Contact Us </a>
+                                <a href="{{ url_for('contact') }}" class="menu__link"> Contact Us </a>
                             </li>
                         </ul>
                     </nav>
@@ -106,11 +100,19 @@
                 <marquee scrollamount="10" direction="left" behavior="scroll" id="scroll_news">
                     <div onMouseOver="document.getElementById('scroll_news').stop();"
                         onMouseOut="document.getElementById('scroll_news').start();">
-                        <p style="color: white">
-                            <b>ECOGROW</b> - Sustainable farming for a healthier planet, fresher food for you.
-                            <b> | </b> <b>Eat Healthy Vegetables </b> - Grow green, eat clean, and nourish the future!
+                        <p style="color: white;">
+                            <b>ECOGROW</b> – Sustainable farming for a healthier planet, fresher food for you.
+                            <b>|</b> <b>Eat Healthy Vegetables</b> – Grow green, eat clean, and nourish the future!
                             🌱🌍
+                            <b>|</b> <b>From Soil to Soul</b> – Pure goodness from our farm to your plate. 🥦💚
+                            <b>|</b> <b>Support Local. Choose ECOGROW</b> – Every bite supports a greener world.
+                            🛒🌾
+                            <b>|</b> <b>Smart Farming, Better Living</b> – Where innovation meets sustainability.
+                            ⚙️🌱
+                            <b>|</b> <b>Grown with Love</b> – No chemicals. Just nature’s touch. 🌼🍅
+                            <b>|</b> <b>Healthy You, Healthy Earth</b> – One veggie at a time. 🌍🥗
                         </p>
+
                     </div>
                 </marquee>
             </div>
@@ -120,15 +122,26 @@
     <!--//banner-bottom-->
 
     <!--/banner-section-->
-    <div id="demo-1" data-zs-src='["static/images/b3.png","static/images/b5.jpg","static/images/b1.jpg","static/images/b2.jpg","static/images/b4.jpg"]'
+    <div id="demo-1" data-zs-src='["images/b3.png","images/b5.jpg","images/b1.jpg","images/b2.jpg","images/b4.jpg"]'
         data-zs-overlay="dots">
         <div class="demo-inner-content">
 
             <!--/banner-info-->
             <div class="baner-info">
-                <h3>Welcome to EcoGROW</h3>
-                <p style="font-family: 'Covered By Your Grace', cursive; font-size: 4.5em;">Organic Farming For Family
+                <h3 style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 3em;" ;>Welcome to EcoGrow
+                </h3>
+                <p style="font-family: 'Poppins', sans-serif, cursive; font-size: 5em; font-weight: 800;">Organic
+                    Farming For Family <img src="static/images/leaf-01.png" alt="Leaf Icon" class="leaf-icon">
                 </p>
+                <p style="font-family: 'Poppins', sans-serif; font-size: 1.2em; font-weight: 400; 
+          color: #fff; max-width: 600px; line-height: 1.6; word-wrap: break-word; 
+          padding-bottom: 40px;">
+                    Experience the joy of organic farming and bring fresh, homegrown produce to your family.
+                    Start your sustainable journey today!
+                </p>
+
+
+                <a class="hvr-rectangle-out w3_play_icon1" href="#read_articles"> Read more</a>
             </div>
             <!--/banner-ingo-->
         </div>
@@ -147,7 +160,7 @@
                                         <img src="static/images/a1.jpg" class="img-responsive" alt="img">
                                     </div>
                                     <div class="info">
-                                        <a href="{{ url_for('space_identification.upload_image') }}" class="menu__link"></a>
+                                        <p>Place<br> Identification</p>
                                     </div>
                                 </div>
                             </div>
@@ -157,7 +170,7 @@
                                         <img src="static/images/a2.jpg" class="img-responsive" alt="img">
                                     </div>
                                     <div class="info">
-                                        <p>Plant Prediction</p>
+                                        <p>Plant<br> Prediction</p>
                                     </div>
                                 </div>
                             </div>
@@ -167,7 +180,7 @@
                                         <img src="static/images/a3.jpg" class="img-responsive" alt="img">
                                     </div>
                                     <div class="info">
-                                        <p>Disease Identification</p>
+                                        <p>Disease<br> Identification</p>
                                     </div>
                                 </div>
                             </div>
@@ -177,7 +190,7 @@
                                         <img src="static/images/a4.jpg" class="img-responsive" alt="img">
                                     </div>
                                     <div class="info">
-                                        <p>AgriHelp Chatbot</p>
+                                        <p>AgriHelp <br> Chatbot</p>
                                     </div>
                                 </div>
                             </div>
@@ -190,32 +203,104 @@
 
 
             <h3 class="w3ls-title">
-                <span>A</span>bout us
+                <h3 class="w3ls-title">
+                    About us
+                </h3>
+
             </h3>
             <h5>Strive for the Best not just Good</h5>
             <div class="col-md-7  w3ls-about-left">
-                <p>We have a lot of Benefitial herbs in our country about which we really dont know and for the same
-                    reason Agro-Farm has pledged to give you information about everything you need. We provide all the
-                    details and articles related to useful herbs, their benefits and risks.</p>
+                <p>At EcoGrow, we believe in the power of nature and sustainable farming. Our mission is to inspire
+                    families to grow their own organic produce, ensuring a healthier lifestyle and a greener
+                    planet.</br>
+
+                    With a passion for eco-friendly agriculture, we provide guidance, resources, and tools to help you
+                    cultivate fresh, chemical-free food right from your backyard. Whether you're a beginner or an
+                    experienced farmer, EcoGrow is here to support your journey toward self-sufficiency and
+                    environmental sustainability.</br>
+
+                    Join us in a future where healthy eating and sustainable livng go hand in hand!🌱</p>
             </div>
             <div class="col-md-5 w3ls-row">
-                <div class="col-md-6 col-sm-6 wthree-about-left">
-                    <img src="static/images/a4.jpg" class="img-responsive" alt="" />
-                </div>
-                <div class="col-md-6 col-sm-6 w3ls-row alert wthree-about-right">
-                    <img src="static/images/a3.jpg" class="img-responsive" alt="" />
+                <div class="col-md-12 col-sm-12 wthree-about-left">
+                    <img src="images/a4.jpg" class="img-responsive" alt="" />
                 </div>
                 <div class="clearfix"> </div>
             </div>
+
+
             <div class="clearfix"> </div>
 
         </div>
     </div>
     <!-- //about -->
 
+    <!-- menu -->
+    <section class="services" id="services">
+        <div class="container">
+            <h3 class="w3ls-title"> Services </h3>
+            <div class="max-width">
+                <div class="serv-content">
+                    <div class="card">
+                        <div class="box">
+                            <i class="fas fa-seedling"></i>
+                            <div class="text"> Plant Health Diagnosis System </div>
+                            <p>Instantly detect plant diseases and nutrient deficiencies using AI-powered image
+                                recognition.</p>
+                        </div>
+                    </div>
 
+                    <div class="card">
+                        <div class="box">
+                            <i class="fas fa-leaf"></i>
+                            <div class="text"> Smart Crop Recommendations </div>
+                            <p>Get personalized plant suggestions based on soil quality, weather, and location for
+                                optimal growth.</p>
+                        </div>
+                    </div>
 
+                    <div class="card">
+                        <div class="box">
+                            <i class="fas fa-comments"></i>
+                            <div class="text"> AI Farming Assistant (Chatbot)</div>
+                            <p>Ask our AI chatbot for expert guidance on plant care, pest control, and sustainable
+                                farming techniques.</p>
+                        </div>
+                    </div>
 
+                    <div class="card">
+                        <div class="box">
+                            <i class="fas fa-bug"></i>
+                            <div class="text"> Organic Pest & Disease Solutions </div>
+                            <p>Receive eco-friendly remedies and preventive measures to protect your crops naturally.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="box">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div class="text"> Seasonal Planting Guide System </div>
+                            <p>Plan your farming activities with AI-generated seasonal calendars for the best harvest.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="box">
+                            <i class="fas fa-tint"></i>
+                            <div class="text"> Precision Irrigation Guidance System </div>
+                            <p>Get AI-powered recommendations on optimal watering schedules to prevent overwatering.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </div>
+    </div>
+    <!-- //menu -->
 
 
 
@@ -225,10 +310,10 @@
             <div class="list-footer">
                 <ul class="footer-nav">
                     <li>
-                        <a href="#">Home</a>
+                        <a href="{{ url_for('home') }}" class="menu__link">Home</a>
                     </li>
                     <li>
-                        <a href="about.html">About</a>
+                        <a href="{{ url_for('about') }}" class="menu__link">About</a>
                     </li>
 
                     <li>
@@ -241,7 +326,7 @@
                         <a href="{{ url_for('chatbot.chat') }}">AgriHelp Chatbot</a>
                     </li>
                     <li>
-                        <a href="contact.html">Contact</a>
+                        <a href="{{ url_for('contact') }}">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -298,23 +383,24 @@
 
 
     <!-- banner slider -->
-    <script src="static/js/modernizr-2.6.2.min.js"></script>
-    <script src="static/js/jquery.zoomslider.min.js"></script>
-    <!-- //banner slider -->
-    <!-- //gallery -->
-    <script src="static/js/jquery.tools.min.js"></script>
-    <script src="static/js/jquery.mobile.custom.min.js"></script>
-    <script src="static/js/jquery.cm-overlay.js"></script>
-
+    <script src="{{ url_for('static', filename='js/jquery-2.2.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modernizr-2.6.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.zoomslider.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.tools.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.mobile.custom.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.cm-overlay.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('.cm-overlay').cmOverlay();
         });
     </script>
     <!-- //gallery -->
+    <!-- testimonials -->
     <!-- required-js-files-->
-    <link href="static/css/owl.carousel.css" rel="stylesheet">
-    <script src="static/js/owl.carousel.js"></script>
+    <link href="css/owl.carousel.css" rel="stylesheet">
+    <script src="js/owl.carousel.js"></script>
     <script>
         $(document).ready(function () {
             $("#owl-demo").owlCarousel({
@@ -329,8 +415,8 @@
     </script>
     <!--//required-js-files-->
     <!-- start-smooth-scrolling -->
-    <script src="static/js/move-top.js"></script>
-    <script src="static/js/easing.js"></script>
+    <script src="js/move-top.js"></script>
+    <script src="js/easing.js"></script>
     <script>
         jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {
@@ -361,10 +447,10 @@
 
         });
     </script>
-    <script src="static/js/SmoothScroll.min.js"></script>
+    <script src="js/SmoothScroll.min.js"></script>
     <!-- //smooth-scrolling-of-move-up -->
     <!-- navigation  -->
-    <script src="static/js/main.js"></script>
+    <script src="js/main.js"></script>
     <script>
         $('#myModal').modal('show');
     </script>
@@ -374,4 +460,4 @@
     <!-- Placed at the end of the document so the pages load faster -->
 </body>
 
-</html>
+</html>s

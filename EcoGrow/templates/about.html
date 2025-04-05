@@ -2,90 +2,1198 @@
 <html lang="zxx">
 
 <head>
-    <title>Agro-Farm</title>
+    <title>HOME | Agro-Farm</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8" />
-    <meta name="keywords" content="rahil, sha, agro, farm, diwan, agriculture, herbs, health, daffofils, lavender">
-    <meta name="description" content="Agro-Farm has pledged to give you information about everything you need. We provide all the details and articles related to useful herbs, their benefits and risks.">
-    <meta name="author" content="Rahilsha">
-    <meta name="google-adsense-account" content="ca-pub-1485231057952478">
-    
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-516RM1MHLD"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-516RM1MHLD');
-    </script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    
-    
+
     <script>
         addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
         }, false);
-
         function hideURLbar() {
             window.scrollTo(0, 1);
         }
     </script>
-    <!-- Custom Theme files -->
-    <link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="all">
+
+    <!-- Stylesheets -->
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link href="{{ url_for('static', filename='css/style.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/zoomslider.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/cm-overlay.css') }}" />
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet">
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Mukta+Mahee:200,300,400,500,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- Scripts -->
     <script src="js/jquery-2.2.3.min.js"></script>
-    <!-- numscroller -->
-    <script type="text/javascript" src="js/numscroller-1.0.js"></script>
+    <script src="js/numscroller-1.0.js"></script>
     <script src="js/bootstrap.js"></script>
-    <!-- font-awesome icons -->
-    <link href="css/font-awesome.css" rel="stylesheet">
-    <!-- //Custom Theme files -->
-    <!-- web-fonts -->
-    <link href="//fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
-    <link href="//fonts.googleapis.com/css?family=Mukta+Mahee:200,300,400,500,600,700,800" rel="stylesheet">
-    <!-- //web-fonts -->
+
+    <!-- Internal CSS -->
+    <style>
+        body {
+            margin: 0;
+            background: #fff;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+
+        a {
+            transition: 0.5s all;
+            text-decoration: none;
+            outline: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 0;
+        }
+
+        p {
+            margin: 0;
+            font-size: 1.15em;
+            color: #999;
+            line-height: 1.8em;
+        }
+
+        ul,
+        label {
+            margin: 0;
+            padding: 0;
+        }
+
+        a:hover,
+        a:focus {
+            text-decoration: none;
+        }
+
+        /* Bottom to Top */
+        #toTop {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 3%;
+            z-index: 999;
+            width: 32px;
+            height: 32px;
+            background: url(../images/move-top.png) no-repeat 0px 0px;
+            border: none;
+            text-indent: 100%;
+            overflow: hidden;
+        }
+
+        #toTopHover {
+            width: 32px;
+            height: 32px;
+            display: block;
+            float: right;
+            opacity: 0;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 70px;
+            margin-right: 10px;
+            margin-top: 20px;
+        }
+
+        /* Menu */
+        .m_nav_ham {
+            width: 30px;
+            height: 3px;
+            background: #036f0c;
+            margin: 6px 0;
+            transition: 0.3s;
+        }
+
+        #m_nav_container {
+            width: 100%;
+            height: 80px;
+            background-color: #036f0c;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 990;
+            display: none;
+        }
+
+        .wthree_bg {
+            transform: translateY(-100%);
+            transition: all 0.5s ease;
+        }
+
+        .wthree_bg.container_open {
+            transform: translateY(0);
+        }
+
+        #m_nav_menu {
+            width: 50px;
+            height: 32px;
+            position: fixed;
+            top: 30px;
+            right: 13.4%;
+            z-index: 999;
+            cursor: pointer;
+        }
+
+        .m_nav_item {
+            display: inline-block;
+            margin: 0 1em;
+        }
+
+        .m_nav_item a {
+            color: #000;
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .container_open {
+            position: fixed;
+            display: block;
+            height: 120px;
+        }
+
+        /*-- //footer --*/
+
+        .popupContainer {
+            position: absolute;
+            width: 330px;
+            height: auto;
+            left: 45%;
+            top: 80px;
+            background: #FFF;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+
+        h3.other-nw {
+            margin: 16px 0;
+        }
+
+        button.btn.btn-primary {
+            background-color: #003b64;
+            padding: 3px 16px 5px;
+            font-weight: 500;
+            border: none;
+            border-radius: 0;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+
+        button.btn.btn-primary.btn-sm,
+        button.btn.btn-default.btn-sm {
+            background-color: #036f0c;
+            padding: 7px 18px 7px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            outline: none;
+            font-size: 1em;
+            letter-spacing: 1px;
+            transition: 0.5s all;
+            -webkit-transition: 0.5s all;
+            -moz-transition: 0.5s all;
+            -o-transition: 0.5s all;
+            -ms-transition: 0.5s all;
+            color: #fff;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+
+        button.btn.btn-primary.btn-sm:hover,
+        button.btn.btn-default.btn-sm:hover {
+            color: #fff;
+            background-color: #192021;
+            transition: 0.5s all;
+            -webkit-transition: 0.5s all;
+            -moz-transition: 0.5s all;
+            -o-transition: 0.5s all;
+            -ms-transition: 0.5s all;
+        }
+
+        a.btn.btn-primary {
+            background-color: #3a5795;
+            font-family: 'Mukta Mahee', sans-serif;
+            color: #fff;
+            border: none;
+        }
+
+        a.btn.btn-danger {
+            background-color: #036f0c;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #036f0c;
+            border: none;
+        }
+
+        .modal-content {
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .modal-dialog {
+            margin: 16em auto 0;
+        }
+
+        .modal-header {
+            padding: 1.5em 2em 2em;
+        }
+
+        .modal-body {
+            padding: 2em 3em 3em;
+        }
+
+        h4.modal-title {
+            color: #000;
+            font-size: 2em;
+            margin-top: 2em;
+            text-transform: capitalize;
+        }
+
+        .newsletter h6 {
+            font-size: 1.2em;
+            line-height: 1.5;
+            text-transform: capitalize;
+            color: #000;
+            margin: 0em 0 2em;
+        }
+
+        .btn_red:hover {
+            background: #9F9F9F;
+        }
+
+        a.btn {
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .one_half {
+            width: 50%;
+            display: block;
+            float: left;
+        }
+
+        .one_half.last {
+            width: 45%;
+            margin-left: 5%;
+        }
+
+        /* Popup Styles*/
+
+        .popupHeader {
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .popupHeader {
+            background: #F4F4F2;
+            position: relative;
+            padding: 10px 20px;
+            border-bottom: 1px solid #DDD;
+            font-weight: bold;
+        }
+
+        .popupHeader .modal_close {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 10px 15px;
+            background: #E4E4E2;
+            cursor: pointer;
+            color: #aaa;
+            font-size: 16px;
+        }
+
+        .popupBody {
+            padding: 20px;
+        }
+
+        /*-- about-bottom --*/
+
+        h3.h3-w3l,
+        h2.h3-w3l {
+            text-align: center;
+            font-size: 2.5em;
+            color: #000;
+            margin-bottom: 1.2em;
+            text-transform: capitalize;
+        }
+
+        .about-w3right {
+            background: url(../images/about.jpg) no-repeat center;
+            background-size: cover;
+            min-height: 333px;
+        }
+
+        .agileits-title {
+            text-align: center;
+        }
+
+        .agileits-title h3 {
+            font-size: 3.5em;
+            color: #000;
+            display: inline-block;
+            padding: .1em 0.5em;
+            margin: 0.3em 1.3em;
+        }
+
+        .about-w3right {
+            padding: 0 2em;
+        }
+
+        .about-w3left img {
+            width: 100%;
+        }
+
+        /*-- panel --*/
+
+        .panel-sec {
+            background: url(../images/nav.jpg) no-repeat center;
+            background-size: cover;
+        }
+
+        .pa_italic i {
+            left: -1.5em;
+            font-size: 11px;
+        }
+
+        .pa_italic span {
+            display: none;
+        }
+
+        .collapsed span {
+            display: inline-block;
+            left: -1.5em;
+            font-size: 11px;
+        }
+
+        .collapsed i {
+            display: none;
+        }
+
+        .panel-heading {
+            padding: 0;
+        }
+
+        .panel-title {
+            font-size: 1.2em;
+            color: #333;
+            text-transform: capitalize;
+            text-decoration: none;
+            font-family: 'Mukta Mahee', sans-serif;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .panel-title a.pa_italic.collapsed {
+            background: #fff;
+            color: #333;
+            -webkit-box-shadow: 0px 1px 1px 1px #ccc;
+            -moz-box-shadow: 0px 1px 1px 1px #ccc;
+            -o-box-shadow: 0px 1px 1px 1px #ccc;
+            -ms-box-shadow: 0px 1px 1px 1px #ccc;
+            box-shadow: 0px 1px 1px 1px #ccc;
+        }
+
+        .panel-title a {
+            background: #036f0c;
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 12px 35px;
+        }
+
+        .panel-default {
+            border-color: #FFF;
+            background: #f5f5f5;
+        }
+
+        .panel-default>.panel-heading {
+            color: #212121;
+            background-color: #fff;
+        }
+
+        .panel-body {
+            padding: 1em 2em;
+            font-size: 14px;
+            line-height: 2em;
+            color: #999;
+            border-top-color: transparent;
+            -webkit-box-shadow: 0px 0px 1px #aaa;
+            -moz-box-shadow: 0px 0px 1px #aaa;
+            box-shadow: 0px 0px 1px #aaa;
+            background: #fff;
+        }
+
+        a.pa_italic label {
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        a.pa_italic:focus {
+            outline: none;
+            text-decoration: none;
+        }
+
+        .panel-default>.panel-heading+.panel-collapse>.panel-body {
+            border-top-color: #fff;
+        }
+
+        /*-- //panel --*/
+
+        /*-- timing --*/
+
+        .agile_timing_left {
+            background: url(../images/7.jpg) no-repeat center;
+            min-height: 379px;
+        }
+
+        .agile_timing_right {
+            padding: 0 2em 2em;
+        }
+
+        .agile_timing_right a {
+            color: #7fbb00;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1em;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            font-size: 1em;
+            line-height: 2em;
+        }
+
+        .agile_timing_right a:hover {
+            color: #fff;
+        }
+
+        .agile_timing_right h4 {
+            margin: 0 0 1em 0;
+            color: #fff;
+            font-size: 1.8em;
+            text-transform: capitalize;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .agile_timing_right ul li {
+            list-style-type: none;
+            margin-bottom: 1em;
+            color: #eee;
+            font-size: 1em;
+            letter-spacing: 2px;
+            word-spacing: 1px;
+        }
+
+        li.wthree-time-title {
+            background: #7fbb00;
+            padding: 0.2em 1em;
+            display: inline-block;
+        }
+
+        .agile_timing_right ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        .agile_timing_right p a:hover {
+            color: #212121;
+        }
+
+        /*-- //timing --*/
+
+        /* slide */
+
+        .slide {
+            background: url(../images/b2.jpg) no-repeat center;
+            background-size: cover;
+            min-height: 350px;
+            padding: 9em;
+        }
+
+        .slide h4 {
+            color: #fff;
+            text-transform: capitalize;
+            font-size: 5em;
+            text-shadow: 2px 6px 1px #000;
+            font-weight: 600;
+        }
+
+        .slide p {
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 1em;
+            letter-spacing: 10px;
+            text-shadow: 0px 3px 2px #000;
+            font-weight: 600;
+            word-spacing: 8px;
+        }
+
+        /* //slide */
+
+        .grid {
+            position: relative;
+            margin: 2em auto;
+            padding: 1em 0 4em;
+            list-style: none;
+            text-align: center;
+        }
+
+        .grid figure {
+            position: relative;
+            float: left;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .grid figure:nth-child(odd) {
+            margin: 0 0 1em 0;
+        }
+
+        .grid figure figcaption {
+            padding: 2em;
+            color: #fff;
+            font-size: 1.25em;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            text-transform: capitalize;
+        }
+
+
+
+        .grid figure h4,
+        .grid figure p {
+            margin: 0;
+        }
+
+        .grid figure h4 {
+            word-spacing: -0.15em;
+            font-weight: 300;
+        }
+
+        .grid figure figcaption>a {
+            z-index: 1000;
+            text-indent: 200%;
+            white-space: nowrap;
+            font-size: 0;
+            opacity: 0;
+        }
+
+        /***** Bubba *****/
+
+        /*---------------*/
+
+        figure.w3l-service-hover h4 {
+            font-size: 0.9em;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            padding: 5% 0;
+            background: #d66047;
+            -webkit-transition: -webkit-transform 0.35s;
+            transition: transform 0.35s;
+            -webkit-transform: translate3d(0, -20px, 0);
+            transform: translate3d(0, -20px, 0);
+        }
+
+        figure.w3l-service-hover p {
+            padding: 1em 1em 0;
+            color: #a79a9a;
+            opacity: 0;
+            font-size: 0.9em;
+            -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+            transition: opacity 0.35s, transform 0.35s;
+            -webkit-transform: translate3d(0, 20px, 0);
+            transform: translate3d(0, 20px, 0);
+        }
+
+        figure.w3l-service-hover:hover figcaption::before,
+        figure.w3l-service-hover:hover figcaption::after {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+
+        figure.w3l-service-hover:hover h4,
+        figure.w3l-service-hover:hover p {
+            opacity: 1;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .grid figure img :hover {
+            background: rgba(214, 96, 71, 0.76);
+        }
+
+        /*-- services --*/
+
+        /* inner-bg*/
+
+        .inner-bg {
+            background: url(../images/b3.jpg) no-repeat center;
+            background-size: cover;
+            min-height: 300px;
+        }
+
+        /* inner-bg */
+
+        .contact-icon-wthree span {
+            color: #d66047;
+            font-size: 1.5em;
+        }
+
+
+        /* Services section styling */
+        .services,
+        .teams {
+            color: #fff;
+            margin-bottom: -100px;
+            padding-bottom: 150px;
+        }
+
+        .services .title::before,
+        .teams .title::before {
+            background: #fff;
+        }
+
+
+        .services .serv-content .card {
+            width: calc(33.33% - 20px);
+            /* Adjusted width to fit three cards per line */
+            display: inline-block;
+            /* Display cards horizontally */
+            background: #000000;
+            text-align: center;
+            border-radius: 6px;
+            padding: 50px 25px;
+            padding-top: 50px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .services .serv-content .card:hover {
+            background: #036f0c;
+        }
+
+        .services .serv-content .card .box {
+            transition: all 0.3s ease;
+        }
+
+        .services .serv-content .card:hover .box {
+            transform: scale(1.05);
+        }
+
+        .services .serv-content .card i {
+            font-size: 50px;
+            color: #05b083;
+            transition: color 0.3s ease;
+        }
+
+        .services .serv-content .card:hover i {
+            color: #fff;
+        }
+
+        .services .serv-content .card .text {
+            font-size: 25px;
+            font-weight: 500;
+            margin: 10px 0 7px 0;
+        }
+
+
+        /*-- //panel --*/
+
+        body {
+
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%);
+        }
+
+
+        h1 {
+            color: #fff;
+            font-size: 3em;
+            text-align: center;
+            margin-top: 50px;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+
+
+        h2 {
+            background-color: #036f0c;
+            color: white;
+            padding: 10px;
+            border-radius: 50px;
+            text-align: center;
+
+        }
+
+
+        button {
+            margin: 20px;
+            padding: 20px;
+            background-color: #05b083;
+            font-weight: 900;
+            color: #222831;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #EEEEEE;
+        }
+
+        .about-us {
+            display: flex;
+            justify-content: space-evenly;
+            margin: 100px;
+            background-color: transparent;
+            padding: 0px 20px 50px 0px;
+            border-radius: 10px;
+            margin-bottom: 100px;
+            gap: 30px;
+        }
+
+        .about-us .mission,
+        .about-us .vision {
+            flex: 1;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            /* translucent background */
+            backdrop-filter: blur(10px);
+            /* blur for glass effect */
+            -webkit-backdrop-filter: blur(10px);
+            /* Safari support */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            /* stronger glassy shadow */
+            color: #ffffff;
+            /* white text for visibility if background is dark */
+        }
+
+
+
+        .mission p {
+            font-size: 120%;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #FFF;
+        }
+
+        .vision p {
+            font-size: 120%;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #FFF;
+
+        }
+
+        .wrapper .title {
+            text-align: center;
+        }
+
+        .title h4 {
+            display: inline-block;
+            padding: 20px;
+            color: #fff;
+            font-size: 50px;
+            font-weight: 500;
+            word-spacing: 5px;
+            border-radius: 15px;
+            text-transform: capitalize;
+
+
+        }
+
+        .wrapper .card_Container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 100px 0;
+        }
+
+        .card_Container .card {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 1);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card .imageBox,
+        .imageBox img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .card .content {
+            position: absolute;
+            bottom: -160px;
+            width: 100%;
+            height: 160px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            backdrop-filter: blur(35px);
+            box-shadow: 0 -10px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            transition: bottom 0.5s;
+            transition-delay: 0.65s;
+        }
+
+        .card:hover .content {
+            bottom: 0;
+            transition-delay: 0s;
+        }
+
+        .content .contentBox h3 {
+            text-transform: uppercase;
+            color: #fff;
+            letter-spacing: 2px;
+            font-weight: 500;
+            font-size: 18px;
+            text-align: center;
+            margin: 20px 0 15px;
+            line-height: 1.1em;
+            transition: 0.5s;
+            transition-delay: 0.6s;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .card:hover .content .contentBox h3 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content .contentBox h3 span {
+            font-size: 12px;
+            font-weight: 300;
+            text-transform: initial;
+        }
+
+        .content .brand {
+            position: relative;
+            bottom: 10px;
+            display: flex;
+        }
+
+        .content .brand li {
+            list-style: none;
+            margin: 0 10px;
+            transform: translateY(40px);
+            transition: 0.5s;
+            opacity: 0;
+            transition-delay: calc(0.2s * var(--i));
+        }
+
+        .card:hover .content .brand li {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .content .brand li a {
+            color: #0b0b0b;
+            font-size: 24px;
+        }
+    </style>
 </head>
 
 <body>
-    <!--banner-inner-->
+
+    <!-- Banner Bottom -->
     <div class="w3_agilits_banner_bootm">
-        <!-- header -->
+        <!-- Header -->
         <div class="container" style="padding-bottom: 20px;">
-            <div class="w3_agile_logo" style="padding-top: 20px;">
-                <h1>
-                    <a href="./index.html">AGRO-FARM</a>
-                </h1>
+            <div class="logo">
+                <img src="static/images/logo.png" alt="EcoGrow Logo">
             </div>
+
             <div class="agileits_w3layouts_nav">
                 <div id="toggle_m_nav">
                     <div id="m_nav_menu" class="m_nav">
-                        <div class="m_nav_ham w3_agileits_ham" id="m_ham_1"></div>
+                        <div class="m_nav_ham" id="m_ham_1"></div>
                         <div class="m_nav_ham" id="m_ham_2"></div>
                         <div class="m_nav_ham" id="m_ham_3"></div>
                     </div>
-
                 </div>
+
                 <div id="m_nav_container" class="m_nav wthree_bg">
                     <nav class="menu menu--sebastian">
                         <ul id="m_nav_list" class="m_nav menu__list">
-                            <li class="m_nav_item menu__item" id="m_nav_item_1">
-                                <a href="./index.html" class="menu__link"> Home </a>
+                            <li class="m_nav_item menu__item menu__item" id="m_nav_item_1">
+                                <a href="{{ url_for('home') }}" class="menu__link"> Home </a>
                             </li>
-                            <li class="m_nav_item menu__item menu__item--current" id="moble_nav_item_2">
-                                <a href="./about.html" class="menu__link"> About Us </a>
+                            <li class="m_nav_item menu__item--current" id="moble_nav_item_2">
+                                <a href="{{ url_for('about') }}" class="menu__link"> About Us </a>
+
+                            <li class="m_nav_item menu__item" id="moble_nav_item_4">
+                                <a href="{{ url_for('space_identification.upload_image') }}" class="menu__link">Plant Prediction</a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_3">
-                                <a href="./services.html" class="menu__link">Articles</a>
+                                <a href="{{ url_for('disease_identification.home') }}" class="menu__link">Disease Identification</a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_4">
-                                <a href="./gallery.html" class="menu__link">Gallery</a>
+                                <a href="{{ url_for('chatbot.chat') }}" class="menu__link">AgriHelp Chatbot</a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_6">
-                                <a href="./contact.html" class="menu__link"> Contact </a>
+                                <a href="{{ url_for('contact') }}" class="menu__link"> Contact Us </a>
                             </li>
                         </ul>
                     </nav>
                 </div>
             </div>
-        
+        </div>
+
+        <!-- Marquee -->
+        <div class="w3_agilits_inner_bottom">
+            <div class="wthree_agile_login">
+                <marquee scrollamount="10" direction="left" behavior="scroll" id="scroll_news">
+                    <div onmouseover="document.getElementById('scroll_news').stop();"
+                        onmouseout="document.getElementById('scroll_news').start();">
+                        <p style="color: white;">
+                            <b>ECOGROW</b> – Sustainable farming for a healthier planet, fresher food for you.
+                            <b>|</b> <b>Eat Healthy Vegetables</b> – Grow green, eat clean, and nourish the future! 🌱🌍
+                            <b>|</b> <b>From Soil to Soul</b> – Pure goodness from our farm to your plate. 🥦💚
+                            <b>|</b> <b>Support Local. Choose ECOGROW</b> – Every bite supports a greener world. 🛒🌾
+                            <b>|</b> <b>Smart Farming, Better Living</b> – Where innovation meets sustainability. ⚙️🌱
+                            <b>|</b> <b>Grown with Love</b> – No chemicals. Just nature’s touch. 🌼🍅
+                            <b>|</b> <b>Healthy You, Healthy Earth</b> – One veggie at a time. 🌍🥗
+                        </p>
+                    </div>
+                </marquee>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="wrapper">
+
+        <h1>About Us </h1>
+
+        <div class="about-us">
+
+            <div class="mission">
+
+                <h2>Our Mission</h2>
+
+                <br>
+                <p>EcoGrow envisions a future where urban communities actively contribute to environmental
+                    sustainability by transforming their limited living spaces into thriving hubs of organic
+                    cultivation. We aim to make urban farming an accessible and rewarding lifestyle, where every balcony
+                    and indoor corner becomes a step toward a greener, healthier, and more self-sufficient world.
+                </p>
+
+            </div>
+
+            <div class="vision">
+
+                <h2>Our Vision</h2>
+                <br>
+                <p>Our mission at EcoGrow is to empower urban dwellers with intelligent, data-driven tools that promote
+                    sustainable agriculture within city environments. By combining AI-powered plant prediction, space
+                    classification, disease detection, and personalized guidance through a chatbot, we strive to
+                    simplify urban gardening. EcoGrow is dedicated to enhancing food security, promoting eco-conscious
+                    living, and fostering a deep connection between people and nature—one plant at a time.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="title">
+            <h4>Our Team</h4>
+        </div>
+
+        <div class="card_Container">
+
+            <div class="card">
+
+                <div class="imageBox">
+                    <img src="static\images\deshan.jpg" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="contentBox">
+                        <h3>Deshan Costa <br><span>STUDENT 1</span></h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="imageBox">
+                    <img src="static\images\dulina.jpg" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="contentBox">
+                        <h3>Dulina Wickramasinghe <br><span>STUDENT 2</span></h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="imageBox">
+                    <img src="static\images\inuka.jpg" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="contentBox">
+                        <h3>Inuka Gajanayake <br><span>STUDENT 3</span></h3>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="imageBox">
+                    <img src="static\images\nisal.jpg" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="contentBox">
+                        <h3>Nisal Kahandawala <br><span>STUDENT 4</span></h3>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    <!-- footer -->
+    <div class="agile-footer w3ls-section">
+        <div class="container">
+            <div class="list-footer">
+                <ul class="footer-nav">
+                    <li>
+                        <a href="{{ url_for('home') }}" class="menu__link">Home</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('about') }}" class="menu__link">About</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ url_for('space_identification.upload_image') }}">Plant Prediction</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('disease_identification.home') }}">Disease Identification</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('chatbot.chat') }}">AgriHelp Chatbot</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('contact') }}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="agileits_w3layouts-footer-bottom">
+                <div class="w3_agile-footer-grids">
+                    <div class="col-md-3  w3_agile-footer1 f1" style="width: 50%;">
+                        <h2 class="f1" style="color: white;">About Us</h2><br>
+                        <p>We have a lot of Benefitial herbs in our country about which we really dont know and for the
+                            same reason Eco Grow has pledged to give you information about everything you need. We
+                            provide all the details and articles related to useful herbs, their benefits and risks.</p>
+                    </div>
+                    <div class="col-md-3  w3_agile-footer1 f3" style="float: right;">
+                        <h5>follow us</h5>
+                        <ul class="footer-social-icons">
+                            <li>
+                                <a href="https://www.facebook.com/rahilsha.diwan" target="_blank">
+                                    <i class="fa icon1 fa-facebook icons" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/in/rahilshadiwan" target="_blank">
+                                    <i class="fa icon6 fa-linkedin icons" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/rahilsha1" target="_blank">
+                                    <i class="fa icon2 fa-twitter icons" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/rahilshadiwan" target="_blank">
+                                    <i class="fa icon3 fa-instagram icons" aria-hidden="true"></i>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="mailto:rahilsha2000@gmail.com?subject = Feedback&body = Message">
+                                    <i class="fa icon5 fa-google-plus icons" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //footer -->
+
+    <script src="{{ url_for('static', filename='js/jquery-2.2.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modernizr-2.6.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.zoomslider.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.tools.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.mobile.custom.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.cm-overlay.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.cm-overlay').cmOverlay();
+        });
+    </script>
+
+</body>
+
+</html>
