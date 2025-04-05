@@ -1,12 +1,15 @@
 import os
 import sqlite3
-import requests
 import re
+import requests
+import wikipedia
 from rasa_sdk import Action
+import logging
+logger = logging.getLogger(__name__)
 from sentence_transformers import SentenceTransformer, util
 
-# Set fallback API base URL
-FLASK_API_URL = "http://localhost:5000/api"
+# 📌 Set a proper User-Agent for Wikipedia requests
+wikipedia.set_user_agent("PlantBot/1.0 (https://yourdomain.com/contact)")
 
 # Define DB paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -14,23 +17,16 @@ DISEASES_DB_PATH = os.path.join(BASE_DIR, "plant_diseases.db")
 PLANTING_DB_PATH = os.path.join(BASE_DIR, "planting_techniques.db")
 
 # Load SBERT model from root-level /sbert_model folder
-PROJECT_ROOT = os.path.dirname(BASE_DIR)  # goes up from /actions
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
 SBERT_MODEL_PATH = os.path.join(PROJECT_ROOT, "sbert_model")
 sbert_model = SentenceTransformer(SBERT_MODEL_PATH)
 
-# Helper to sanitize fallback query (removes filler phrases)
-def sanitize_for_fallback(text):
-    text = text.lower().strip().replace("?", "")
-    text = re.sub(
-        r"\b(what is|tell me about|information on|how to grow|how do i grow|how to cure|how to treat|watering method for|sunlight required for|care instructions for)\b",
-        "",
-        text,
-    )
-    return text.strip()
+# Headers for external API requests
+HEADERS = {
+    "User-Agent": "PlantBot/1.0 (https://yourdomain.com/contact)"
+}
 
-# ======================
-# 🌿 Disease Action
-# ======================
+# 🌿 Disease Info Handler
 class ActionGetPlantInfo(Action):
     def name(self):
         return "action_get_plant_info"
@@ -41,7 +37,7 @@ class ActionGetPlantInfo(Action):
             "disease", "symptom", "treatment", "cure", "infection",
             "blight", "spot", "mildew", "virus", "wilt", "rot",
             "fungus", "bacteria", "rust", "leaf", "cause", "causes",
-            "reason", "info", "information", "about"
+            "reason", "info", "information", "about" ,"what is"
         ]
 
         if not any(word in user_query for word in KEYWORDS):
@@ -49,6 +45,7 @@ class ActionGetPlantInfo(Action):
             return []
 
         try:
+            # Search from local DB
             conn = sqlite3.connect(DISEASES_DB_PATH)
             cursor = conn.cursor()
             cursor.execute("SELECT disease_name, description, symptoms, treatment FROM plant_diseases")
@@ -82,37 +79,55 @@ class ActionGetPlantInfo(Action):
                 return []
 
         except Exception as e:
-            print(f"[ERROR] Local DB disease lookup failed: {e}")
+            logger.exception("Local DB disease lookup failed")
 
-        # Fallback to Wikipedia
-        fallback_name = sanitize_for_fallback(user_query)
-        print(f"[INFO] Looking up disease fallback: {fallback_name}")
-
+        # 🌐 MediaWiki Fallback if DB fails
         try:
-            r = requests.get(f"{FLASK_API_URL}/plant_disease", params={"name": fallback_name})
-            data = r.json()
-            description = data.get("description", "").strip()
-            source = data.get("source", "N/A")
+            search_term = re.sub(r"(symptoms|treatment|cure|about|information|info)", "", user_query).strip()
+            params = {
+                "action": "query",
+                "format": "json",
+                "prop": "extracts|pageimages|description",
+                "exintro": True,
+                "explaintext": True,
+                "piprop": "original",
+                "titles": search_term,
+                "redirects": 1,
+            }
+            wiki_resp = requests.get("https://en.wikipedia.org/w/api.php", headers=HEADERS, params=params)
+            data = wiki_resp.json()
 
-            if description:
-                response = (
-                    f"**{data.get('disease_name', fallback_name.title())} (from external source)**\n\n"
-                    f"**Description:** {description}\n\n"
-                    f"**Source:** {source}"
-                )
-            else:
-                response = "I couldn't find any info on that disease. Try another one?"
+            pages = data.get("query", {}).get("pages", {})
+            page = next(iter(pages.values()))
+
+            if "missing" in page:
+                raise ValueError("Page not found")
+
+            title = page.get("title", "Unknown Disease")
+            extract = page.get("extract", "No description available.")
+            description = page.get("description", "No description available.")
+            image_url = page.get("original", {}).get("source", None)
+
+            wiki_link = f"https://en.wikipedia.org/wiki/{title.replace(' ', '_')}"
+            reply = (
+                f"**[From Wikipedia] {title}**\n\n"
+                f"🔗 **Description:** {description}\n\n"
+                f"📖 **Overview:**\n{extract}\n\n"
+                f"[Read more on Wikipedia]({wiki_link})"
+            )
+
+            if image_url:
+                reply += f'\n\n<img src="{image_url}" alt="{title}" style="max-width:200px; border-radius:8px;">'
+
+            dispatcher.utter_message(text=reply)
+
         except Exception as e:
-            response = "Something went wrong fetching external disease info."
-            print(f"[ERROR] Disease fallback exception: {e}")
-
-        dispatcher.utter_message(text=response)
+            logger.exception("MediaWiki fallback failed")
+            dispatcher.utter_message(text="Sorry, I couldn't find any information about that disease.")
         return []
 
 
-# ======================
 # 🌱 Planting Techniques Action
-# ======================
 class ActionGetPlantingTechniques(Action):
     def name(self):
         return "action_get_planting_techniques"
@@ -174,28 +189,39 @@ class ActionGetPlantingTechniques(Action):
                 return []
 
         except Exception as e:
-            print(f"[ERROR] Local DB planting lookup failed: {e}")
+            logger.exception("Local DB planting lookup failed")
 
-        # Fallback to OpenFarm
-        fallback_name = sanitize_for_fallback(user_query)
-        print(f"[INFO] Looking up planting fallback: {fallback_name}")
-
+        # 🌐 Fallback to OpenFarm
         try:
-            r = requests.get(f"{FLASK_API_URL}/planting_techniques", params={"name": fallback_name})
-            data = r.json()
-            if "error" not in data:
-                response = (
-                    f"**{data.get('plant_name', fallback_name.title())} (from external source)**\n\n"
-                    f"**Description:** {data.get('description', 'No info')}\n\n"
-                    f"**Sun Requirements:** {data.get('sun_requirements', 'Unknown')}\n\n"
-                    f"**Sowing Method:** {data.get('sowing_method', 'Unknown')}\n\n"
-                    f"**Source:** {data.get('source', 'N/A')}"
-                )
-            else:
-                response = "I couldn’t find anything for that plant. Try a different name?"
-        except Exception as e:
-            response = "Something went wrong while trying to look that up externally."
-            print(f"[ERROR] Planting fallback exception: {e}")
+            plant_keyword = user_query.split()[-1]
+            response = requests.get(f"https://openfarm.cc/api/v1/crops/?filter={plant_keyword}", headers=HEADERS)
+            data = response.json()
+            if data.get("data"):
+                crop = data["data"][0]["attributes"]
+                name = crop.get("name", "Unknown")
+                binomial = crop.get("binomial_name", "N/A")
+                description = crop.get("description", "No description available.")
+                sun = crop.get("sun_requirements", "N/A")
+                sowing = crop.get("sowing_method", "N/A")
+                image = crop.get("main_image_path")
+                common_names = ", ".join(crop.get("common_names", [])) or "None listed"
 
-        dispatcher.utter_message(text=response)
-        return []
+                info = (
+                    f"**[From OpenFarm] {name} ({binomial})**\n\n"
+                    f"📝 **Description:**\n{description}\n\n"
+                    f"🔆 **Sun Requirements:** {sun}\n\n"
+                    f"🌱 **Sowing Method:** {sowing}\n\n"
+                    f"📛 **Also known as:** {common_names}\n\n"
+                )
+
+                if image:
+                    info += f'\n\n<img src="{image}" alt="{name}" style="max-width: 200px; border-radius: 8px;">'
+
+                dispatcher.utter_message(text=info)
+            else:
+                dispatcher.utter_message(text="I couldn't find any info from OpenFarm.")
+        except Exception as e:
+            logger.exception("OpenFarm fallback failed")
+            dispatcher.utter_message(text="Sorry, no planting info found.")
+
+

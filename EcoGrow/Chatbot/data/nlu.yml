@@ -85,36 +85,50 @@ nlu:
 
 - intent: ask_plant_disease
   examples: |
-    - Tell me about [Powdery Mildew](disease_name)
-    - What are the symptoms of [Rust](disease_name)?
-    - How do I treat [Leaf Spot](disease_name)?
-    - What is [Blight](disease_name)?
-    - Can you help me with [Anthracnose](disease_name)?
-    - I need information about [Black Spot](disease_name).
-    - What should I do for [Canker](disease_name)?
-    - What causes [Downy Mildew](disease_name)?
-    - What does [Cercospora Leaf Spot](disease_name) look like?
-    - How can I prevent [Botrytis (Gray Mold)](disease_name)?
-    - Do you have details on [Black Spot](disease_name)?
-    - What treatment is available for [Powdery Mildew](disease_name)?
-    - How to cure [Rust](disease_name)?
-    - What are the first signs of [Blight](disease_name)?
-    - Is [Leaf Spot](disease_name) dangerous for plants?
-    - Can [Anthracnose](disease_name) spread to other plants?
+    - Tell me about [powdery mildew](disease_name)
+    - What are the symptoms of [rust](disease_name)?
+    - How do I treat [leaf spot](disease_name)?
+    - What is [blight](disease_name)?
+    - Can you help me with [anthracnose](disease_name)?
+    - I need information about [black spot](disease_name).
+    - What should I do for [canker](disease_name)?
+    - What causes [downy mildew](disease_name)?
+    - What does [cercospora leaf spot](disease_name) look like?
+    - How can I prevent [botrytis (gray mold)](disease_name)?
+    - Do you have details on [black spot](disease_name)?
+    - What treatment is available for [powdery mildew](disease_name)?
+    - How to cure [rust](disease_name)?
+    - What are the first signs of [blight](disease_name)?
+    - Is [leaf spot](disease_name) dangerous for plants?
+    - Can [anthracnose](disease_name) spread to other plants?
+    - What are the symptoms of [rust](disease_name)?
+    - How can I treat [rust](disease_name)?
+    - What causes [rust](disease_name)?
+    - Tell me about [powdery mildew](disease_name)
+    - What does [powdery mildew](disease_name) look like?
+    - How do I cure [powdery mildew](disease_name)?
+
+    
 
 - intent: ask_planting_techniques
   examples: |
-    - How do I grow [Tomato](plant_name)?
-    - What are the best conditions for [Lettuce](plant_name)?
-    - Tell me how to plant [Carrot](plant_name).
-    - What is the soil type required for [Basil](plant_name)?
-    - How much water does [Cucumber](plant_name) need?
-    - What is the best soil for [Zucchini](plant_name)?
-    - How often should I water [Spinach](plant_name)?
-    - What light conditions does [Bell Pepper](plant_name) need?
-    - Can I plant [Mint](plant_name) indoors?
-    - What are the care instructions for [Rosemary](plant_name)?
-    - What is the best soil pH for [Strawberries](plant_name)?
-    - How should I prepare the soil for [Blueberries](plant_name)?
-    - How much sunlight does [Parsley](plant_name) need?
-    - What fertilizers are best for [Chili](plant_name)?
+    - How do I grow [tomato](plant_name)?
+    - What are the best conditions for [lettuce](plant_name)?
+    - Tell me how to plant [carrot](plant_name).
+    - What is the soil type required for [basil](plant_name)?
+    - How much water does [cucumber](plant_name) need?
+    - What is the best soil for [zucchini](plant_name)?
+    - How often should I water [spinach](plant_name)?
+    - What light conditions does [bell pepper](plant_name) need?
+    - Can I plant [mint](plant_name) indoors?
+    - What are the care instructions for [rosemary](plant_name)?
+    - What is the best soil pH for [strawberries](plant_name)?
+    - How should I prepare the soil for [blueberries](plant_name)?
+    - How much sunlight does [parsley](plant_name) need?
+    - What fertilizers are best for [chili](plant_name)?
+    - How do I grow [cherry](plant_name)?
+    - What is the soil type for [cherry](plant_name)?
+    - Tell me how to grow [basil](plant_name)
+    - How much water does [cherry](plant_name) need?
+    - What is the light requirement for [cherry](plant_name)?
+    - What are the care instructions for [cherry](plant_name)?  

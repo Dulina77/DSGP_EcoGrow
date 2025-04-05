@@ -1,12 +1,8 @@
 import os
 import sqlite3
-import requests
 from flask import Blueprint, request, jsonify
 
 plant_bp = Blueprint('plant', __name__)
-
-WIKIPEDIA_API = "https://en.wikipedia.org/api/rest_v1/page/summary/"
-OPENFARM_API = "https://openfarm.cc/api/v1/crops/?filter="
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
@@ -23,20 +19,6 @@ def fetch_from_db(db_path, query, param):
         return result
     except sqlite3.Error as e:
         print(f"Database error: {e}")
-        return None
-
-def fetch_from_external_api(query, is_disease=True):
-    if is_disease:
-        api_url = WIKIPEDIA_API + query
-    else:
-        api_url = OPENFARM_API + query
-
-    try:
-        response = requests.get(api_url, timeout=5)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching from API: {e}")
         return None
 
 @plant_bp.route("/api/plant_disease", methods=["GET"])
@@ -60,15 +42,7 @@ def get_plant_disease():
             "treatment": disease[3]
         })
 
-    external_data = fetch_from_external_api(disease_name, is_disease=True)
-    if external_data:
-        return jsonify({
-            "disease_name": disease_name.capitalize(),
-            "description": external_data.get("extract", "No description available."),
-            "source": external_data.get("content_urls", {}).get("desktop", {}).get("page", "No source available.")
-        })
-
-    return jsonify({"error": "Disease not found in database or external sources"}), 404
+    return jsonify({"error": "Disease not found in the database"}), 404
 
 @plant_bp.route("/api/planting_techniques", methods=["GET"])
 def get_planting_techniques():
@@ -92,15 +66,4 @@ def get_planting_techniques():
             "care_instructions": plant[4]
         })
 
-    external_data = fetch_from_external_api(plant_name, is_disease=False)
-    if external_data and "data" in external_data and len(external_data["data"]) > 0:
-        crop = external_data["data"][0]["attributes"]
-        return jsonify({
-            "plant_name": plant_name.capitalize(),
-            "description": crop.get("description", "No description available."),
-            "sun_requirements": crop.get("sun_requirements", "Unknown"),
-            "sowing_method": crop.get("sowing_method", "Unknown"),
-            "source": "https://openfarm.cc/crop/" + plant_name.replace(" ", "-")
-        })
-
-    return jsonify({"error": "Plant not found in database or external sources"}), 404
+    return jsonify({"error": "Plant not found in the database"}), 404

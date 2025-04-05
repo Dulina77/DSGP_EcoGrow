@@ -5,6 +5,8 @@ assistant_id: 20250222-132502-electric-iteration
 language: en
 
 pipeline:
+  - name: RegexEntityExtractor
+    case_sensitive: false
   - name: WhitespaceTokenizer
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
