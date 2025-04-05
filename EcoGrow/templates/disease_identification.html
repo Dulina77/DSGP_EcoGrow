@@ -19,7 +19,21 @@
     
     <!-- Additional styles for Leaf Disease Prediction -->
     <style>
-        /* Override container styles to match Home page */
+        /* Adjust body to accommodate fixed navbar */
+        body {
+            margin: 0;
+            padding-top: 120px;
+        }
+
+        .w3_agilits_banner_bootm {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; 
+            background: #000;
+        }
+
         .container {
             width: 100%;
             max-width: 1200px;
@@ -31,6 +45,7 @@
             text-align: center;
             margin-top: 20px;
         }
+
         h1 {
             color: #333;
             font-size: 3em;
@@ -38,20 +53,48 @@
             margin: 0.5em 0;
             font-family: 'Mukta Mahee', sans-serif;
         }
+
+        
+        h4 {
+            font-size: 1.5em;
+            color: #036f0c; 
+            margin-bottom: 1em;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+
+  
+        #form-container {
+            width: 37%; 
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px; 
+            margin: 0 auto; 
+        }
+
+   
         form {
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
         }
+
         input[type="file"] {
             margin: 15px 0;
             padding: 5px;
             font-family: 'Mukta Mahee', sans-serif;
         }
+
         button {
             margin-top: 15px;
             padding: 10px 20px;
-            background: #036f0c; /* Matching Home page button color */
+            background: #036f0c;
             color: white;
             border: none;
             cursor: pointer;
@@ -59,40 +102,187 @@
             font-size: 16px;
             font-family: 'Mukta Mahee', sans-serif;
             transition: .5s ease-in;
+            width: 100%;
+            max-width: 150px; 
         }
+
         button:hover {
             background: #fff;
             color: #000;
         }
+
+
+        #imagePreview {
+            margin-top: 10px;
+            max-width: 300px; 
+            width: 100%;
+            height: auto;
+            display: none;
+            border-radius: 10px; 
+        }
+        
         .result {
             margin-top: 15px;
             font-family: 'Mukta Mahee', sans-serif;
             font-size: 1.2em;
+            width: 100%;
+            text-align: center; 
         }
+
+        .result ul {
+            display: inline-block; 
+            text-align: left; 
+            padding-left: 20px; 
+            margin: 0 auto; 
+        }
+
         .error {
             color: #d9534f;
         }
+
         .success {
             color: #5cb85c;
         }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #eafaf1, #ffffff);
+        }
+
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .left-panel {
+            flex: 1;
+            padding: 60px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-container h1 {
+            font-size: 2em;
+            color: #035c0d;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+            padding: 12px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        button {
+            width: 100%;
+            background: #035c0d;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #024c0b;
+        }
+
         #imagePreview {
             margin-top: 20px;
             max-width: 100%;
-            height: auto;
+            border-radius: 10px;
+            border: 1px solid #ccc;
             display: none;
         }
-        /* Adjust body to accommodate fixed navbar */
-        body {
-            margin: 0; 
-            padding-top: 120px; 
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            transition: 0.3s ease;
         }
-        .w3_agilits_banner_bootm {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000; /* Ensure it stays above other content */
-            background: #000; /* Match the black background */
+
+        .success {
+            background-color: #e7fbe7;
+            color: #2d8a45;
+            border-left: 5px solid #2d8a45;
+        }
+
+        .error {
+            background-color: #ffe5e5;
+            color: #d9534f;
+            border-left: 5px solid #d9534f;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #035c0d;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .right-panel {
+            flex: 1;
+            background: #f6fff8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .right-panel img {
+            max-width: 90%;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .right-panel,
+            .left-panel {
+                padding: 30px 20px;
+            }
+
+            .right-panel img {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -130,7 +320,7 @@
                                 <a href="{{ url_for('chatbot.chat') }}" class="menu__link">AgriHelp Chatbot</a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_6">
-                                <a href="templates/contact.html" class="menu__link"> Contact Us </a>
+                                <a href="{{ url_for('contact') }}" class="menu__link"> Contact Us </a>
                             </li>
                         </ul>
                     </nav>
@@ -154,15 +344,22 @@
     <!-- End Navigation -->
 
     <!-- Main Content -->
-    <div class="section-w3ls">
-        <div class="container">
-            <h1>Leaf Disease Prediction</h1>
-            <form id="uploadForm">
-                <input type="file" id="imageInput" accept="image/*" required>
-                <img id="imagePreview" alt="Image Preview">
-                <button type="submit">Predict</button>
-            </form>
-            <div id="result" class="result"></div>
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="form-container">
+                <h1>Leaf Disease Prediction</h1>
+                <form id="uploadForm">
+                    <input type="file" id="imageInput" accept="image/*" required />
+                    <img id="imagePreview" alt="Image Preview">
+                    <button type="submit"><i class="fas fa-seedling"></i> Predict</button>
+                </form>
+                <div id="spinner" class="spinner"></div>
+                <div id="result" class="result"></div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <img src="{{ url_for('static', filename='images/hero-plant-health.jpg') }}" alt="Plant Treatment Illustration" />
         </div>
     </div>
 
@@ -176,7 +373,7 @@
                     <li><a href="{{ url_for('space_identification.upload_image') }}">Plant Prediction</a></li>
                     <li><a href="{{ url_for('disease_identification.home') }}">Disease Identification</a></li>
                     <li><a href="{{ url_for('chatbot.chat') }}">AgriHelp Chatbot</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
                 </ul>
             </div>
             <div class="agileits_w3layouts-footer-bottom">
@@ -220,13 +417,14 @@
 
     <!-- Leaf Disease Prediction Script -->
     <script>
-        const uploadForm = document.getElementById('uploadForm');
+        const form = document.getElementById('uploadForm');
         const imageInput = document.getElementById('imageInput');
         const imagePreview = document.getElementById('imagePreview');
-        const resultDiv = document.getElementById('result');
+        const spinner = document.getElementById('spinner');
+        const result = document.getElementById('result');
 
-        imageInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
+        imageInput.addEventListener('change', () => {
+            const file = imageInput.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
@@ -234,75 +432,66 @@
                     imagePreview.style.display = 'block';
                 };
                 reader.readAsDataURL(file);
-            } else {
-                imagePreview.style.display = 'none';
             }
         });
 
-        uploadForm.addEventListener('submit', async (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            result.style.display = 'none';
+            result.className = 'result';
+            spinner.style.display = 'block';
 
-            if (!imageInput.files[0]) {
-                resultDiv.textContent = "Please upload an image.";
-                resultDiv.className = "result error";
+            const file = imageInput.files[0];
+            if (!file) {
+                result.textContent = 'Please upload an image.';
+                result.className = 'result error';
+                result.style.display = 'block';
+                spinner.style.display = 'none';
                 return;
             }
 
             const formData = new FormData();
-            formData.append('image', imageInput.files[0]);
+            formData.append('image', file);
 
             try {
-                resultDiv.textContent = "Processing...";
-                resultDiv.className = "result";
-
                 const response = await fetch('http://127.0.0.1:5001/disease_identification/predict', {
                     method: 'POST',
-                    body: formData,
+                    body: formData
                 });
 
                 const data = await response.json();
+                spinner.style.display = 'none';
 
                 if (!response.ok || data.error) {
-                    resultDiv.innerHTML = `⚠️ <strong>Error:</strong> ${data.error}`;
-                    resultDiv.className = "result error";
+                    result.textContent = `Error: ${data.error}`;
+                    result.className = 'result error';
                 } else {
                     const prediction = data.predicted_label;
 
-                    let resultHTML = `<strong>Prediction:</strong> ${prediction}`;
-
-                    const descriptions = {
-                        "Rust": `
-                            Rust is a fungal disease that causes reddish-brown pustules to appear on the leaves. It weakens plants and can affect their growth.
-                            <br><br><strong>How to prevent and manage Rust:</strong>
-                            <ul style="text-align: left;">
-                                <li>Remove and destroy affected leaves and plant parts.</li>
-                                <li>Use fungicides as recommended for rust control.</li>
-                                <li>Apply organic treatments like baking soda solutions or sulfur dustings to prevent further spread.</li>
-                            </ul>
-                        `,
-                        "Powdery": `
-                            Powdery mildew appears as white, powdery spots on leaves. It thrives in dry, shaded areas.
-                            <br><br><strong>How to prevent and manage Powdery Mildew:</strong>
-                            <ul style="text-align: left;">
-                                <li>Use natural remedies like a baking soda solution or milk spray.</li>
-                                <li>Apply neem oil as an organic treatment.</li>
-                                <li>Use fungicides such as sulfur or copper-based products if necessary.</li>
-                            </ul>
-                        `
-                    };
-
-                    if (descriptions[prediction]) {
-                        resultHTML += `<br><br><strong>Description:</strong><br>${descriptions[prediction]}`;
+                    let description = '';
+                    if (prediction === 'Rust') {
+                        description = `
+              Rust is a fungal disease that causes reddish-brown spots on leaves.<br><strong>Tips:</strong><ul>
+              <li>Use fungicide spray</li><li>Remove affected leaves</li><li>Ensure proper spacing</li></ul>`;
+                    } else if (prediction === 'Powdery') {
+                        description = `
+              Powdery mildew creates white patches on leaves.<br><strong>Tips:</strong><ul>
+              <li>Spray neem oil</li><li>Improve ventilation</li><li>Trim infected parts</li></ul>`;
                     }
 
-                    resultDiv.innerHTML = resultHTML;
-                    resultDiv.className = "result success";
+                    result.innerHTML = `<strong>Prediction:</strong> ${prediction}<br><br>${description}`;
+                    result.className = 'result success';
                 }
+
+                result.style.display = 'block';
             } catch (error) {
-                resultDiv.textContent = `⚠️ An unexpected error occurred: ${error.message}`;
-                resultDiv.className = "result error";
+                spinner.style.display = 'none';
+                result.textContent = `Unexpected error: ${error.message}`;
+                result.className = 'result error';
+                result.style.display = 'block';
             }
         });
+    
     </script>
 </body>
 </html>

@@ -100,18 +100,37 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 10px; /* Add spacing between elements */
         }
-        #nextButton {
-            text-align: center;
-            margin-top: 20px;
+        #uploadForm {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            order: 2; /* Move the form below the image */
+        }
+        #uploadForm input[type="file"] {
+            margin-bottom: 10px;
+        }
+        #uploadForm button {
+            width: 100%;
+            max-width: 150px; /* Limit the button width */
         }
         #preview-image {
+            order: 1; /* Move the image to the top */
             width: 100%;
             max-width: 300px;
             display: none;
             border-radius: 10px;
-            margin-top: 10px;
-            margin-bottom: 10%;
+            margin: 10px 0;
+        }
+        #prediction-result-form {
+            order: 3; /* Keep the prediction result at the bottom */
+            width: 100%;
+        }
+        #nextButton {
+            text-align: center;
+            margin-top: 20px;
         }
         h1 {
             font-size: 3em;
@@ -174,7 +193,7 @@
                                 <a href="{{ url_for('chatbot.chat') }}" class="menu__link">AgriHelp Chatbot</a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_6">
-                                <a href="templates/contact.html" class="menu__link"> Contact Us </a>
+                                <a href="{{ url_for('contact') }}" class="menu__link"> Contact Us </a>
                             </li>
                         </ul>
                     </nav>
@@ -237,15 +256,15 @@
             <div class="list-footer">
                 <ul class="footer-nav">
                     <li><a href="{{ url_for('home') }}" class="menu__link"> Home </a></li>
-                    <li><a href="{{ url_for('about') }}" class="menu__link">About</a>>About</a></li>
+                    <li><a href="{{ url_for('about') }}" class="menu__link">About</a></li>
                     <li><a href="{{ url_for('space_identification.upload_image') }}">Plant Prediction</a></li>
                     <li><a href="{{ url_for('disease_identification.home') }}">Disease Identification</a></li>
                     <li><a href="{{ url_for('chatbot.chat') }}">AgriHelp Chatbot</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
                 </ul>
             </div>
             <div class="agileits_w3layouts-footer-bottom">
-                <div class="w////////////////////////////////////////////////////////////////3_agile-footer-grids">
+                <div class="w3_agile-footer-grids">
                     <div class="col-md-3 w3_agile-footer1 f1" style="width: 50%;">
                         <h2 class="f1" style="color: white;">About Us</h2><br>
                         <p>We have a lot of beneficial herbs in our country about which we really don’t know and for the same reason Agro-Farm has pledged to give you information about everything you need. We provide all the details and articles related to useful herbs, their benefits and risks.</p>

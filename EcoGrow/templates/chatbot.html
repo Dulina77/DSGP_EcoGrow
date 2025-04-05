@@ -164,7 +164,7 @@
                                 <a href="{{ url_for('chatbot.chat') }}" class="menu__link">AgriHelp Chatbot</a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_6">
-                                <a href="templates/contact.html" class="menu__link"> Contact Us </a>
+                                <a href="{{ url_for('contact') }}" class="menu__link"> Contact Us </a>
                             </li>
                         </ul>
                     </nav>
@@ -209,7 +209,7 @@
                     <li><a href="{{ url_for('space_identification.upload_image') }}">Plant Prediction</a></li>
                     <li><a href="{{ url_for('disease_identification.home') }}">Disease Identification</a></li>
                     <li><a href="{{ url_for('chatbot.chat') }}">AgriHelp Chatbot</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
                 </ul>
             </div>
             <div class="agileits_w3layouts-footer-bottom">

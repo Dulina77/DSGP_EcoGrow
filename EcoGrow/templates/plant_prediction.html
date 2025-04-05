@@ -19,7 +19,41 @@
     
     <!-- Additional styles for Plant Prediction -->
     <style>
-        /* Override container styles to match Home page */
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+        }
+
+        .w3_agilits_banner_bootm {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; 
+            background: #000;
+        }
+
+        .w3_agilits_inner_bottom {
+            background: #000; /* Ensure the marquee section is also black */
+        }
+
+        .wthree_agile_login marquee p {
+            color: white; /* Ensure marquee text is white */
+        }
+
+        /* Override container background in header */
+        .w3_agilits_banner_bootm .container {
+            background: transparent; /* Remove white background */
+            padding: 20px;
+        }
+
+        /* Main Content Styling */
+        .section-w3ls {
+            margin-top: 150px; /* Adjust for fixed header */
+            margin-bottom: 50px; /* Space before footer */
+        }
+
         .container {
             width: 100%;
             max-width: 1200px;
@@ -31,27 +65,69 @@
             text-align: center;
             margin-top: 20px;
         }
-        /* Other existing styles */
-        #weather-status {
-            color: #666;
-            margin-top: 10px;
+
+
+        .container_form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 600px;
+            text-align: center;
+            margin: 0 auto; /* Center the container */
         }
+
         h2 {
+            color: #333;
+        }
+
+        h1 {
             color: #333;
             font-size: 3em;
             text-transform: capitalize;
             margin: 0.5em 0;
+            font-family: 'Mukta Mahee', sans-serif;
         }
-        form {
+
+        h4 {
+            font-size: 1.5em;
+            color: #036f0c; 
+            margin-bottom: 1em;
+            font-family: 'Mukta Mahee', sans-serif;
+        }
+
+        #form-container {
+            width: 37%; 
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 10px; 
+            margin: 0 auto; 
         }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
         label {
             margin-top: 10px;
             font-weight: bold;
-            font-family: 'Mukta Mahee', sans-serif;
         }
+
+        input {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
         input[type="number"] {
             padding: 8px;
             margin-top: 5px;
@@ -61,44 +137,169 @@
             max-width: 300px;
             font-family: 'Mukta Mahee', sans-serif;
         }
-        input[type="radio"] {
-            margin: 5px 5px 5px 0;
+
+        .radio-group {
+            display: flex;
+            flex-direction: row; 
+            align-items: center;
+            gap: 20px; 
+            margin-top: 5px;
+            margin-bottom: 6px;
         }
+
+        input[type="radio"] {
+            margin: 8px; 
+        }
+
+        .radio-group label {
+            margin-top: 4px; 
+            font-weight: normal; 
+            margin-left: -9px;
+        }
+
         button {
             margin-top: 15px;
-            padding: 10px 20px;
-            background: #036f0c; /* Matching Home page button color */
+            padding: 10px;
+            background: #28a745;
             color: white;
             border: none;
             cursor: pointer;
             border-radius: 4px;
             font-size: 16px;
-            font-family: 'Mukta Mahee', sans-serif;
-            transition: .5s ease-in;
         }
+
         button:hover {
-            background: #fff;
-            color: #000;
+            background: #218838;
         }
+
+        /* Prediction result styling */
         .prediction {
             margin-top: 15px;
             font-weight: bold;
             color: #333;
             font-family: 'Mukta Mahee', sans-serif;
             font-size: 1.2em;
-        }
-        /* Adjust body to accommodate fixed navbar */
-        body {
-            margin: 0; 
-            padding-top: 120px; 
-        }
-        .w3_agilits_banner_bootm {
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            z-index: 1000; /* Ensure it stays above other content */
-            background: #000; /* Match the black background seen in the screenshot */
+            text-align: center;
+        }
+
+        /* Place text styling */
+        p {
+            font-family: 'Mukta Mahee', sans-serif;
+            font-size: 1em;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .location-selection {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .location-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .location-box img {
+            width: 200px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .hidden-inputs {
+            display: none;
+        }
+
+        /* Footer Styling */
+        .agile-footer {
+            background: #000; /* Black background for footer */
+            padding: 20px 0;
+            color: white; /* White text for footer */
+        }
+
+        /* Override container background and width in footer */
+        .agile-footer .container {
+            background: transparent; /* Remove white background */
+            padding: 20px 0; /* Adjust padding */
+            width: 1140px; /* Make the footer wider (matching Bootstrap's default container width) */
+            max-width: 100%; /* Ensure it doesn't exceed the viewport width on smaller screens */
+        }
+
+        .agile-footer a {
+            color: white; /* White links in footer */
+            text-decoration: none; /* Remove underline */
+            font-family: 'Mukta Mahee', sans-serif;
+            font-size: 1em;
+        }
+
+        .agile-footer a:hover {
+            color: #28a745; /* Hover color for links */
+        }
+
+        .footer-nav {
+            text-align: center;
+            margin-bottom: 30px; /* Consistent spacing */
+            padding: 10px 0;
+            border-bottom: 1px solid #333; /* Subtle separator */
+        }
+
+        .footer-nav li {
+            display: inline-block;
+            margin: 0 20px; /* Adjust spacing between links */
+        }
+
+        .w3_agile-footer-grids {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 0 20px; /* Adjust padding */
+        }
+
+        .w3_agile-footer1.f1 {
+            width: 50%; /* Match the layout */
+        }
+
+        .w3_agile-footer1.f3 {
+            width: auto;
+            text-align: right; /* Align "Follow Us" to the right */
+        }
+
+        .w3_agile-footer1 h2, .w3_agile-footer1 h5 {
+            color: white; /* Ensure headings in footer are white */
+            font-family: 'Mukta Mahee', sans-serif;
+            margin-bottom: 15px; /* Consistent spacing */
+        }
+
+        .w3_agile-footer1 p {
+            color: white; /* Ensure paragraph text in footer is white */
+            font-family: 'Mukta Mahee', sans-serif;
+            font-size: 1em;
+            line-height: 1.5; /* Match line spacing */
+        }
+
+        .footer-social-icons {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-social-icons li {
+            display: inline-block;
+            margin: 0 10px; /* Adjust spacing between icons */
+        }
+
+        .footer-social-icons a {
+            color: white;
+            font-size: 1.2em; /* Match icon size */
+        }
+
+        .footer-social-icons a:hover {
+            color: #28a745; /* Hover color for social icons */
         }
     </style>
 </head>
@@ -136,7 +337,7 @@
                                 <a href="{{ url_for('chatbot.chat') }}" class="menu__link">AgriHelp Chatbot</a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_6">
-                                <a href="templates/contact.html" class="menu__link"> Contact Us </a>
+                                <a href="{{ url_for('contact') }}" class="menu__link"> Contact Us </a>
                             </li>
                         </ul>
                     </nav>
@@ -161,42 +362,58 @@
 
     <!-- Main Content -->
     <div class="section-w3ls">
-        <div class="container">
+        <div class="container_form">
             <h2>Plant Prediction Model</h2>
+    
+            <!-- Location images with radio buttons -->
+            <div class="location-selection">
+                <div class="location-box">
+                    <img src="{{ url_for('static', filename='images/colombo.jpg') }}" alt="Colombo">
+                    <label>
+                        <input type="radio" name="Location" value="0" onclick="fetchWeather(0)"> Colombo
+                    </label>
+                </div>
+                <div class="location-box">
+                    <img src="{{ url_for('static', filename='images/Kandy.jpg') }}" alt="Kandy">
+                    <label>
+                        <input type="radio" name="Location" value="1" onclick="fetchWeather(1)"> Kandy
+                    </label>
+                </div>
+            </div>
             <form action="/plant_prediction/predict" method="post">
-                <label>Location:</label><br>
-                <input type="radio" id="colombo" name="Location" value="0" onclick="fetchWeather(0)">
-                <label for="colombo">Colombo</label>
-                <input type="radio" id="kandy" name="Location" value="1" onclick="fetchWeather(1)">
-                <label for="kandy">Kandy</label>
-                <br><br>
-                <label for="Temperature">Temperature (°C):</label>
-                <input type="number" id="temperatureInput" name="Temperature" step="any" required>
-                <label for="Precipitation">Precipitation (mm):</label>
-                <input type="number" id="precipitationInput" name="Precipitation" step="any" required>
-                <label for="Humidity">Humidity (%):</label>
-                <input type="number" id="humidityInput" name="Humidity" step="any" required>
+                <div class="hidden-inputs">
+                    <label for="Temperature">Temperature (°C):</label>
+                    <input type="number" id="temperatureInput" name="Temperature" step="any" required>
+    
+                    <label for="Precipitation">Precipitation (mm):</label>
+                    <input type="number" id="precipitationInput" name="Precipitation" step="any" required>
+    
+                    <label for="Humidity">Humidity (%):</label>
+                    <input type="number" id="humidityInput" name="Humidity" step="any" required>
+                </div>
+
                 <label for="Place">Place:</label>
                 <p>{{ place }}</p>
+
                 <button type="submit">Predict</button>
             </form>
+
             {% if prediction %}
             <p class="prediction">Prediction: {{ prediction }}</p>
             {% endif %}
         </div>
     </div>
 
-    <!-- Footer from Home Page -->
-    <div class="agile-footer w3ls-section">
+        <div class="agile-footer w3ls-section">
         <div class="container">
             <div class="list-footer">
                 <ul class="footer-nav">
                     <li><a href="{{ url_for('home') }}" class="menu__link"> Home </a></li>
                     <li><a href="{{ url_for('about') }}" class="menu__link">About</a></li>
-                    <li><a href="#">Plant Prediction</a></li>
+                    <li><a href="{{ url_for('space_identification.upload_image') }}">Plant Prediction</a></li>
                     <li><a href="{{ url_for('disease_identification.home') }}">Disease Identification</a></li>
                     <li><a href="{{ url_for('chatbot.chat') }}">AgriHelp Chatbot</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
                 </ul>
             </div>
             <div class="agileits_w3layouts-footer-bottom">
@@ -241,8 +458,9 @@
     <!-- Weather API Script -->
     <script>
         async function fetchWeather(locationValue) {
-            let apiKey = "972f6b959f2f4fee93940205252502"; // Replace with your WeatherAPI key
+            let apiKey = "972f6b959f2f4fee93940205252502"; // Replace with your actual API key
             let locationName = locationValue === 0 ? "Colombo" : "Kandy";
+
             let url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${locationName}&aqi=no`;
 
             try {
@@ -254,10 +472,10 @@
                     return;
                 }
 
-                // Auto-fill weather values
                 document.getElementById("temperatureInput").value = data.current.temp_c;
                 document.getElementById("humidityInput").value = data.current.humidity;
                 document.getElementById("precipitationInput").value = data.current.precip_mm || 0;
+
             } catch (error) {
                 console.error("Error fetching weather data:", error);
             }
