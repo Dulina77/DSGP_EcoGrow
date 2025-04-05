@@ -1,59 +1,269 @@
 <!DOCTYPE html>
-<html lang="zxx">
-
+<html lang="en">
 <head>
-    <title>Contact | Agro-Farm</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8"/>
-    <meta name="keywords" content="rahil, sha, agro, farm, diwan, agriculture, herbs, health, daffofils, lavender, basil, chamomile, organic, ayurvedic, cure">
-    <meta name="description" content="We provide what you need. We provide all the details and articles related to useful herbs, their benefits and risks.">
-    <meta name="author" content="Rahilsha">
-    <meta name="google-adsense-account" content="ca-pub-1485231057952478">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-516RM1MHLD"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | EcoGrow</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-          gtag('config', 'G-516RM1MHLD');
-        </script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    
-    
-    
     <script>
         addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
         }, false);
-
         function hideURLbar() {
             window.scrollTo(0, 1);
         }
     </script>
-    <!-- Custom Theme files -->
-    <link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="all">
-    <script src="js/jquery-2.2.3.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <!-- font-awesome icons -->
-    <link href="css/font-awesome.css" rel="stylesheet">
-    <!-- //Custom Theme files -->
-    <!-- web-fonts -->
-    <link href="//fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
-    <link href="//fonts.googleapis.com/css?family=Mukta+Mahee:200,300,400,500,600,700,800" rel="stylesheet">
-    <!-- //web-fonts -->
+
+    <!-- Stylesheets -->
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link href="{{ url_for('static', filename='css/style.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/zoomslider.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/cm-overlay.css') }}" />
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet">
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Mukta+Mahee:200,300,400,500,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            margin: 0;
+            padding-top: 70px; /* Adjusted to match navigation bar height */
+            min-height: 100vh;
+        }
+
+        .w3_agilits_banner_bootm {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #1a1a1a;
+        }
+
+        .w3_agilits_inner_bottom {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wthree_agile_login {
+            margin: 0;
+            padding: 5px 0;
+        }
+
+        .contact-container {
+            width: 80%;
+            max-width: 1200px;
+            display: flex;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto 40px; 
+            margin-top: 100px;
+        }
+
+        /* Left Section */
+        .contact-info {
+            flex: 1;
+            padding-right: 40px;
+        }
+
+        .contact-info h2 {
+            color: #036f0c;
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .sub-text {
+            color: gray;
+            font-size: 16px;
+        }
+
+        .description {
+            margin: 10px 0 20px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .contact-details .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .contact-item i {
+            font-size: 22px;
+            color: #036f0c;
+            background: #e0e0e0;
+            padding: 10px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .contact-item h4 {
+            color: #036f0c;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .contact-item p {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .social-media {
+            margin-top: 20px;
+        }
+
+        .social-media h3 {
+            font-size: 18px;
+            color: #036f0c;
+            margin-bottom: 10px;
+        }
+
+        .icons a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            background: #036f0c;
+            padding: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .icons a:hover {
+            background: #036f0c;
+        }
+
+        /* Right Section */
+        .contact-form {
+            flex: 1;
+            background: #f6f6f6;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .contact-form h2 {
+            color: #036f0c;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .contact-form p {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 50%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            background: #036f0c;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background: #036f0c;
+        }
+
+        /* Flash Messages */
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Footer */
+        .agile-footer {
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .contact-container {
+                flex-direction: column;
+                width: 90%;
+                padding: 20px;
+            }
+
+            .contact-info,
+            .contact-form {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .form-group {
+                flex-direction: column;
+            }
+
+            .form-group input {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- banner inner -->
     <div class="w3_agilits_banner_bootm">
         <!-- header -->
         <div class="container" style="padding-bottom: 20px;">
-            <div class="w3_agile_logo" style="padding-top: 20px;">
-                <h1>
-                    <a href="./index.html">AGRO-FARM</a>
-                </h1>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="EcoGrow Logo">
             </div>
             <div class="agileits_w3layouts_nav">
                 <div id="toggle_m_nav">
@@ -62,25 +272,27 @@
                         <div class="m_nav_ham" id="m_ham_2"></div>
                         <div class="m_nav_ham" id="m_ham_3"></div>
                     </div>
-
                 </div>
                 <div id="m_nav_container" class="m_nav wthree_bg">
                     <nav class="menu menu--sebastian">
                         <ul id="m_nav_list" class="m_nav menu__list">
-                            <li class="m_nav_item menu__item " id="m_nav_item_1">
-                                <a href="./index.html" class="menu__link"> Home </a>
+                            <li class="m_nav_item menu__item" id="m_nav_item_1">
+                                <a href="{{ url_for('home') }}" class="menu__link"> Home </a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_2">
-                                <a href="./about.html" class="menu__link"> About Us </a>
-                            </li>
-                            <li class="m_nav_item menu__item" id="moble_nav_item_3">
-                                <a href="./services.html" class="menu__link">Articles</a>
+                                <a href="{{ url_for('about') }}" class="menu__link"> About Us </a>
                             </li>
                             <li class="m_nav_item menu__item" id="moble_nav_item_4">
-                                <a href="./gallery.html" class="menu__link">Gallery</a>
+                                <a href="{{ url_for('space_identification.upload_image') }}" class="menu__link">Plant Prediction</a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_3">
+                                <a href="{{ url_for('disease_identification.home') }}" class="menu__link">Disease Identification</a>
+                            </li>
+                            <li class="m_nav_item menu__item" id="moble_nav_item_4">
+                                <a href="{{ url_for('chatbot.chat') }}" class="menu__link">AgriHelp Chatbot</a>
                             </li>
                             <li class="m_nav_item menu__item menu__item--current" id="moble_nav_item_6">
-                                <a href="./contact.html" class="menu__link"> Contact </a>
+                                <a href="{{ url_for('contact') }}" class="menu__link"> Contact Us </a>
                             </li>
                         </ul>
                     </nav>
@@ -91,111 +303,130 @@
         <div class="w3_agilits_inner_bottom">
             <div class="wthree_agile_login">
                 <marquee scrollamount="10" direction="left" behavior="scroll" id="scroll_news">
-                    <div onMouseOver="document.getElementById('scroll_news').stop();" onMouseOut="document.getElementById('scroll_news').start();">
+                    <div onMouseOver="document.getElementById('scroll_news').stop();"
+                        onMouseOut="document.getElementById('scroll_news').start();">
                         <p style="color: white">
-                            <b>Kafal</b> - is known to have a symbiotic relationship with nitrogen fixing soil microorganism. | <b>Cranberry</b> - They are good source of various vitamins and antioxidants. Many people consider cranberries to be a
-                            super food due to their high nutrients and antioxidant content. | <b>Mandarin Orange</b> - The Chinese associate mandarin oranges with good luck. <b>Nettle</b> - have traditionally been used as a nutritious food, particularly in spring time in rural areas.
+                            <b>ECOGROW</b> - Sustainable farming for a healthier planet, fresher food for you.
+                            <b> | </b> <b>Eat Healthy Vegetables </b> - Grow green, eat clean, and nourish the future! 🌱🌍
                         </p>
                     </div>
                 </marquee>
             </div>
-
         </div>
     </div>
-    <div class="inner-bg"></div>
-    <!--/banner-inner-->
-    <!-- contact -->
-    <div class="contact-bottom section-w3ls main-pos" id="contact" style="background-color: lightgrey; ">
-        <div class="container">
-            <h3 class="w3ls-title">
-                <span>C</span>ontact us</h3>
-            <div class="contact-right-w3l">
-                <form action="#" method="post">
-                    <div class="contact-input">
-                        <input type="text" class="name" name="name" placeholder="First Name" required="">
-                    </div>
-                    <div class="contact-input">
-                        <input type="text" class="name" name="name" placeholder="Last Name" required="">
-                    </div>
-                    <div class="contact-input">
-                        <input type="email" class="name" name="name" placeholder="Email" required="">
-                    </div>
-                    <div class="contact-input">
-                        <input type="text" class="name" name="name" placeholder="Subject" required="">
-                    </div>
-                    <div class="contact-input">
-                        <textarea placeholder="Your Message" required=""></textarea>
-                    </div>
-                    <input type="submit" value="SEND MESSAGE">
-                </form>
-            </div>
-            <div class="clearfix"></div>
-            <div class="contact-main">
-                <div class="col-md-6 col-sm-6 col-xs-6 contact-left-w3ls">
-                    <h3 class="h3-w3l">contact info</h3>
-                    <div class="mail contact-grid-agileinfo c1">
-                        <div class="contact-icon-wthree">
-                            <span class="fa fa-envelope" aria-hidden="true"></span>
-                        </div>
-                        <div class="contact-text-agileinfo">
-                            <h4>Mail us</h4>
-                            <p>
-                                <a href="mailto:info@example.com">rahilsha2000@gmail.com</a>
-                            </p>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="call contact-grid-agileinfo c2">
-                        <div class="contact-icon-wthree">
-                            <span class="fa fa-phone" aria-hidden="true"></span>
-                        </div>
-                        <div class="contact-text-agileinfo">
-                            <h4>Call us</h4>
-                            <p>+91 - 8288983969</p>
-                        </div>
-                        <div class="clearfix"></div>
+
+    <div class="contact-container">
+        <!-- Left Section -->
+        <div class="contact-info">
+            <h2>Get In Touch</h2>
+            <p class="sub-text">Don't hesitate to contact us for more information</p>
+            <p class="description">
+                Feel free to <strong>reach out to us</strong> for inquiries, partnerships, or more
+                information about our agricultural solutions. We’re here to help!
+            </p>
+
+            <div class="contact-details">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h4>Head Office</h4>
+                        <p>435 Galle Rd, Colombo 03, Sri Lanka.</p>
                     </div>
                 </div>
-                <div class="clearfix"></div>
+
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h4>Phone</h4>
+                        <p>+94764085618<br>+94 77 404 9445</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>Email Support</h4>
+                        <p>deshan.20231241@iit.ac.lk</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-media">
+                <h3>Follow Our Social Media :</h3>
+                <div class="icons">
+                    <a href="https://www.facebook.com/rahilsha.diwan" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com/in/rahilshadiwan" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://twitter.com/rahilsha1" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/rahilshadiwan" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="mailto:rahilsha2000@gmail.com?subject=Feedback&body=Message"><i class="fab fa-google-plus-g"></i></a>
+                </div>
             </div>
         </div>
+
+        <!-- Right Section -->
+        <div class="contact-form">
+            <h2>Send Us a Message</h2>
+            <p>Have a question or need more information? Fill out the form below, and our team will get back to you as soon as possible.</p>
+
+            <!-- Display flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('contact') }}" method="POST">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="text" name="phone" placeholder="Phone" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="text" name="subject" placeholder="Subject" required>
+                </div>
+
+                <textarea name="message" placeholder="Message" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
     </div>
-    <!-- //contact -->
-    
 
- 
-
-
-    <!-- footer -->
     <div class="agile-footer w3ls-section">
         <div class="container">
             <div class="list-footer">
                 <ul class="footer-nav">
                     <li>
-                        <a href="index.html">Home</a>
+                        <a href="{{ url_for('home') }}" class="menu__link">Home</a>
                     </li>
                     <li>
-                        <a href="about.html">About</a>
+                        <a href="{{ url_for('about') }}" class="menu__link">About</a>
                     </li>
                     <li>
-                        <a href="services.html">Articles</a>
+                        <a href="{{ url_for('space_identification.upload_image') }}">Plant Prediction</a>
                     </li>
                     <li>
-                        <a href="gallery.html">Gallery</a>
+                        <a href="{{ url_for('disease_identification.home') }}">Disease Identification</a>
                     </li>
                     <li>
-                        <a href="contact.html">Contact</a>
+                        <a href="{{ url_for('chatbot.chat') }}">AgriHelp Chatbot</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('contact') }}">Contact</a>
                     </li>
                 </ul>
             </div>
             <div class="agileits_w3layouts-footer-bottom">
                 <div class="w3_agile-footer-grids">
-                    <div class="col-md-3  w3_agile-footer1 f1" style="width: 50%;">
+                    <div class="col-md-3 w3_agile-footer1 f1" style="width: 50%;">
                         <h2 class="f1" style="color: white;">About Us</h2><br>
-                        <p>We have a lot of Benefitial herbs in our country about which we really dont know and for the same reason Agro-Farm has pledged to give you information about everything you need. We provide all the details and articles related to useful herbs, their benefits and risks.</p>
+                        <p>We have a lot of beneficial herbs in our country about which we really don’t know and for the same reason EcoGrow has pledged to give you information about everything you need. We provide all the details and articles related to useful herbs, their benefits and risks.</p>
                     </div>
-                    <div class="col-md-3  w3_agile-footer1 f3" style="float: right;">
-                        <h5>follow us</h5>
+                    <div class="col-md-3 w3_agile-footer1 f3" style="float: right;">
+                        <h5>Follow Us</h5>
                         <ul class="footer-social-icons">
                             <li>
                                 <a href="https://www.facebook.com/rahilsha.diwan" target="_blank">
@@ -218,12 +449,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="https://www.youtube.com/channel/UCZgDptjLIunBulmt2mkxJSw" target="_blank">
-                                    <i class="fa icon4 fa-youtube icons" aria-hidden="true"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="mailto:rahilsha2000@gmail.com?subject = Feedback&body = Message">
+                                <a href="mailto:rahilsha2000@gmail.com?subject=Feedback&body=Message">
                                     <i class="fa icon5 fa-google-plus icons" aria-hidden="true"></i>
                                 </a>
                             </li>
@@ -234,50 +460,21 @@
             </div>
         </div>
     </div>
-    <!-- //footer -->
 
-
-    
-    
-    <!-- start-smooth-scrolling -->
-    <script src="js/move-top.js"></script>
-    <script src="js/easing.js"></script>
-    <script>
-        jQuery(document).ready(function ($) {
-            $(".scroll").click(function (event) {
-                event.preventDefault();
-
-                $('html,body').animate({
-                    scrollTop: $(this.hash).offset().top
-                }, 1000);
-            });
-        });
-    </script>
-    <!-- //end-smooth-scrolling -->
-
-    <!-- smooth-scrolling-of-move-up -->
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/jquery-2.2.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/numscroller-1.0.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modernizr-2.6.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.zoomslider.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.tools.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.mobile.custom.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.cm-overlay.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>
         $(document).ready(function () {
-            /*
-         var defaults = {
-             containerID: 'toTop', // fading element id
-             containerHoverID: 'toTopHover', // fading element hover id
-             scrollSpeed: 1200,
-             easingType: 'linear' 
-         };
-         */
-
-            $().UItoTop({
-                easingType: 'easeOutQuart'
-            });
-
+            $('.cm-overlay').cmOverlay();
         });
     </script>
-    <script src="js/SmoothScroll.min.js"></script>
-    <!-- //smooth-scrolling-of-move-up -->
-    <!-- navigation  -->
-    <script src="js/main.js"></script>
-    <!-- //navigation -->
 </body>
-
 </html>
