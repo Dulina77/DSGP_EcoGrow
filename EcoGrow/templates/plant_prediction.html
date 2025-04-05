@@ -366,21 +366,25 @@
             <h2>Plant Prediction Model</h2>
     
             <!-- Location images with radio buttons -->
-            <div class="location-selection">
-                <div class="location-box">
-                    <img src="{{ url_for('static', filename='images/colombo.jpg') }}" alt="Colombo">
-                    <label>
-                        <input type="radio" name="Location" value="0" onclick="fetchWeather(0)"> Colombo
-                    </label>
-                </div>
-                <div class="location-box">
-                    <img src="{{ url_for('static', filename='images/Kandy.jpg') }}" alt="Kandy">
-                    <label>
-                        <input type="radio" name="Location" value="1" onclick="fetchWeather(1)"> Kandy
-                    </label>
-                </div>
-            </div>
+        
             <form action="/plant_prediction/predict" method="post">
+
+                <div class="location-selection">
+                    <div class="location-box">
+                        <img src="{{ url_for('static', filename='images/colombo.jpg') }}" alt="Colombo">
+                        <label>
+                            <input type="radio" name="Location" value="0" onclick="fetchWeather(0)" checked> Colombo
+                        </label>
+                    </div>
+                    <div class="location-box">
+                        <img src="{{ url_for('static', filename='images/Kandy.jpg') }}" alt="Kandy">
+                        <label>
+                            <input type="radio" name="Location" value="1" onclick="fetchWeather(1)"> Kandy
+                        </label>
+                    </div>
+                </div>
+
+
                 <div class="hidden-inputs">
                     <label for="Temperature">Temperature (°C):</label>
                     <input type="number" id="temperatureInput" name="Temperature" step="any" required>
@@ -400,6 +404,51 @@
 
             {% if prediction %}
             <p class="prediction">Prediction: {{ prediction }}</p>
+            <div id="predictionImages" style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 20px; margin-top: 10px;"></div>
+            <script>
+                const prediction = "{{ prediction }}";
+                const imageContainer = document.getElementById("predictionImages");
+
+                const imageMap = {
+                    "Lamiaceae": [
+                        "{{ url_for('static', filename='images/basil.jpg') }}",
+                        "{{ url_for('static', filename='images/mint.jpg') }}"
+                    ],
+                    "Alliaceae": [
+                        "{{ url_for('static', filename='images/Greenonions.jpg') }}",
+                        "{{ url_for('static', filename='images/garlic.jpg') }}"
+                    ],
+                    "Solanaceae": [
+                        "{{ url_for('static', filename='images/Chilliepeppers.jpg') }}",
+                        "{{ url_for('static', filename='images/elabatu.jpg') }}"
+                    ],
+                    "Cucurbitaceae": [
+                        "{{ url_for('static', filename='images/Cherrytomatoes.jpg') }}",
+                        "{{ url_for('static', filename='images/Cucumber.jpg') }}"
+                    ]
+                };
+
+                // Clear any existing content in the container
+                imageContainer.innerHTML = "";
+
+                // Check if the prediction exists in the imageMap
+                if (imageMap[prediction]) {
+                    // Loop through the array of images for the prediction
+                    imageMap[prediction].forEach((imageSrc) => {
+                        const imgElement = document.createElement("img");
+                        imgElement.src = imageSrc;
+                        imgElement.alt = prediction;
+                        imgElement.style.width = "200px"; // Fixed width
+                        imgElement.style.height = "200px"; // Fixed height to match width (square)
+                        imgElement.style.borderRadius = "8px"; // Match the original border-radius
+                        imgElement.style.objectFit = "cover"; // Ensure the image fills the container
+                        imageContainer.appendChild(imgElement);
+                    });
+                } else {
+                    // If no images are found, display a message
+                    imageContainer.innerHTML = "<p>No images available for this prediction.</p>";
+                }
+            </script>
             {% endif %}
         </div>
     </div>
@@ -458,7 +507,7 @@
     <!-- Weather API Script -->
     <script>
         async function fetchWeather(locationValue) {
-            let apiKey = "972f6b959f2f4fee93940205252502"; // Replace with your actual API key
+            let apiKey = "972f6b959f2f4fee93940205252502"; 
             let locationName = locationValue === 0 ? "Colombo" : "Kandy";
 
             let url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${locationName}&aqi=no`;
@@ -475,6 +524,7 @@
                 document.getElementById("temperatureInput").value = data.current.temp_c;
                 document.getElementById("humidityInput").value = data.current.humidity;
                 document.getElementById("precipitationInput").value = data.current.precip_mm || 0;
+                document.getElementById("locationInput").value = locationValue;
 
             } catch (error) {
                 console.error("Error fetching weather data:", error);
